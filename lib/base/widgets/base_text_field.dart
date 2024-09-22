@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// A custom text form field widget that wraps a [TextFormField] with commonly used configurations.
 ///
 /// The widget provides additional customization options through its parameters [controller], [labelText], [obscureText], [validator], [enableSuggestions],[autocorrect],[keyboardType] ,  allowing you to control
-class CustomTextFormField extends StatelessWidget {
+class BaseTextField extends StatelessWidget {
   /// Controls the text being edited.
   final TextEditingController controller;
 
@@ -25,8 +25,8 @@ class CustomTextFormField extends StatelessWidget {
   /// The type of keyboard to use for the text field.
   final TextInputType keyboardType;
 
-  /// Required constructor for the [CustomTextFormField] widget.
-  const CustomTextFormField({
+  /// Required constructor for the [BaseTextField] widget.
+  const BaseTextField({
     required this.controller,
     required this.labelText,
     required this.obscureText,

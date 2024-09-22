@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Color backgroundColor;
   final List<Widget> actions;
-  const CustomAppBar(
+  const BaseAppBar(
       {super.key,
       required this.title,
       required this.backgroundColor,
