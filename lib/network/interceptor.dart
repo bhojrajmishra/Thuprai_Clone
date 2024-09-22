@@ -1,48 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked_services/stacked_services.dart';
-import 'package:thuprai_clone/app/app.locator.dart';
 
-class AppInterceptor extends Interceptor {
-  final NavigationService _navigationService = locator<NavigationService>();
-
+class DioInterceptor extends Interceptor {
   @override
-  Future<void> onRequest(
-    RequestOptions options,
-    RequestInterceptorHandler handler,
-  ) async {
-    /// Retrieve token from storage and add to headers if it exists
-    // String? token = await _storageService.read(key: 'token');
-    // if (token != null) {
-    //   options.headers['Authorization'] = 'Bearer $token';
-    // }
-    // debugPrint('Interceptor: Sending request to ${options.path}');
-    // handler.next(options); // Proceed with the request
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    // Perform actions before the request is sent (e.g., attach headers)
+    debugPrint('Request: ${options.method} ${options.path}');
+    handler.next(options); // Continue with the request
   }
 
   @override
-  void onResponse(
-    Response response,
-    ResponseInterceptorHandler handler,
-  ) {
-    debugPrint(
-        'Interceptor: Received response from ${response.requestOptions.path}');
-    handler.next(response);
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    // Perform actions when the response is received
+    debugPrint('Response: ${response.statusCode} ${response.data}');
+    handler.next(response); // Continue with the response
   }
 
   @override
-  void onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) async {
-    debugPrint('Interceptor: Error occurred for ${err.requestOptions.path}');
-
-    if (err.response?.statusCode == 401) {
-      debugPrint('Unauthorized error (401). Logging out user.');
-      // await _storageService.delete(key: 'token');
-      // _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
-    }
-
-    handler.next(err);
+  void onError(DioException err, ErrorInterceptorHandler handler) {
+    // Handle errors (e.g., log them)
+    debugPrint('Error: ${err.message}');
+    handler.next(err); // Continue with the error
   }
 }

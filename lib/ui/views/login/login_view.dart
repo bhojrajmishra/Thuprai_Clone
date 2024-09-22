@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:thuprai_clone/base/validator/validator.dart';
 import 'package:thuprai_clone/base/widgets/button.dart';
 import 'package:thuprai_clone/base/widgets/custom_text_field.dart';
-import 'package:thuprai_clone/base/widgets/validator/validator.dart';
 
 import 'login_viewmodel.dart';
 

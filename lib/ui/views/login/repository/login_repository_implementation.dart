@@ -5,9 +5,9 @@ import 'package:thuprai_clone/ui/views/login/repository/login_repository.dart';
 import 'package:thuprai_clone/ui/views/login/service/login_service.dart';
 
 class LoginRepositoryImpl implements LoginRepository {
+  final loginService = locator<LoginService>();
   @override
   Future<LoginResponse?> requestLoginApi(LoginRequest loginRequest) async {
-    final loginService = locator<LoginService>();
     return await loginService.requestLoginApi(loginRequest);
   }
 }
