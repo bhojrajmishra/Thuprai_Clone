@@ -13,6 +13,7 @@ class CustomTheme {
         primary: Color.fromARGB(255, 16, 83, 18),
         secondary: Colors.grey,
         inversePrimary: Colors.white,
+        onError: Colors.red,
       ),
       textTheme: const TextTheme(
         displayLarge: TextStyle(

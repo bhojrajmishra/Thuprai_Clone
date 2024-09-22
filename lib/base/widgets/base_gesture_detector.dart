@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 class BaseGestureDetector extends StatelessWidget {
   final String title;
   final String imageaddress;
+  final Function() onPressed;
 
   const BaseGestureDetector(
-      {super.key, required this.title, required this.imageaddress});
+      {super.key,
+      required this.title,
+      required this.imageaddress,
+      required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        onPressed();
         debugPrint('Container clicked');
       },
       child: Container(

@@ -23,6 +23,10 @@ class LoginViewModel extends BaseViewModel {
     _navigate.navigateTo(Routes.homeView);
   }
 
+  void requestgoogleSignIn() {}
+
+  void requestfacebookSignIn() {}
+
   // Method to handle login logic and API request
   Future<void> requestLoginApi() async {
     // Validate the form before proceeding
