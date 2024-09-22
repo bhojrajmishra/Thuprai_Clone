@@ -18,14 +18,40 @@ class LoginViewModel extends BaseViewModel {
   final SnackbarService _snackbarService = locator<SnackbarService>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  // BottomNavigationBar current index
+  int currentIndex = 0;
+
+  // Method to handle BottomNavigationBar item taps
+  void onTabTapped(int index) {
+    currentIndex = index;
+    notifyListeners();
+    // TODO: Implement navigation logic based on the tapped index
+    // For example:
+    // switch (index) {
+    //   case 0:
+    //     _navigate.navigateTo(Routes.homeView);
+    //     break;
+    //   case 1:
+    //     _navigate.navigateTo(Routes.searchView);
+    //     break;
+    //   case 2:
+    //     _navigate.navigateTo(Routes.profileView);
+    //     break;
+    // }
+  }
+
   // Method to navigate to the home screen after successful login
   void navigateToHome() {
     _navigate.navigateTo(Routes.homeView);
   }
 
-  void requestgoogleSignIn() {}
+  void requestgoogleSignIn() {
+    // TODO: Implement Google sign-in logic
+  }
 
-  void requestfacebookSignIn() {}
+  void requestfacebookSignIn() {
+    // TODO: Implement Facebook sign-in logic
+  }
 
   // Method to handle login logic and API request
   Future<void> requestLoginApi() async {
