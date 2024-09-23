@@ -21,23 +21,27 @@ class LoginViewModel extends BaseViewModel {
   // BottomNavigationBar current index
   int currentIndex = 0;
 
+  // Password visibility state
+  bool isPasswordVisible = false;
+
   // Method to handle BottomNavigationBar item taps
   void onTabTapped(int index) {
     currentIndex = index;
     notifyListeners();
     // TODO: Implement navigation logic based on the tapped index
-    // For example:
-    // switch (index) {
-    //   case 0:
-    //     _navigate.navigateTo(Routes.homeView);
-    //     break;
-    //   case 1:
-    //     _navigate.navigateTo(Routes.searchView);
-    //     break;
-    //   case 2:
-    //     _navigate.navigateTo(Routes.profileView);
-    //     break;
-    // }
+    switch (index) {
+      case 0:
+        _navigate.navigateTo(Routes.loginView);
+        break;
+      case 1:
+        _navigate.navigateTo(Routes.loginView);
+        break;
+      case 2:
+        _navigate.navigateTo(Routes.loginView);
+        break;
+      default:
+        _navigate.navigateTo(Routes.loginView);
+    }
   }
 
   // Method to navigate to the home screen after successful login
@@ -51,6 +55,12 @@ class LoginViewModel extends BaseViewModel {
 
   void requestfacebookSignIn() {
     // TODO: Implement Facebook sign-in logic
+  }
+
+  // Method to toggle password visibility
+  void togglePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+    notifyListeners();
   }
 
   // Method to handle login logic and API request
@@ -75,7 +85,7 @@ class LoginViewModel extends BaseViewModel {
 
       navigateToHome();
     } catch (e) {
-      _snackbarService.showSnackbar(message: 'Login failed: ');
+      _snackbarService.showSnackbar(message: 'Login failed: $e');
       debugPrint('Login failed: $e');
     } finally {
       // Set the view to not busy (hides the loading spinner)

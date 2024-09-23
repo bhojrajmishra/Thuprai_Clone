@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thuprai_clone/base/widgets/base_carousel.dart';
+import 'package:thuprai_clone/base/widgets/base_list_view_builder.dart';
 import 'package:thuprai_clone/ui/common/app_colors.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
@@ -15,13 +17,23 @@ class HomeView extends StackedView<HomeViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Row(
-            children: [],
+      body: Column(
+        children: [
+          Center(
+            child: BaseCarousel(
+              imgaddress: viewModel.items[0].imageUrl,
+            ),
           ),
-        ),
+          verticalSpaceSmall,
+          Expanded(
+            child: BaseListView(
+              imageUrl: viewModel.items[0].imageUrl,
+              title: viewModel.items[0].title,
+              onTap: () {},
+              profiles: viewModel.items,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -32,3 +44,11 @@ class HomeView extends StackedView<HomeViewModel> {
   ) =>
       HomeViewModel();
 }
+
+
+// BaseListView(
+//                 imageUrl: viewModel.items[0].imageUrl,
+//                 title: viewModel.items[0].title,
+//                 onTap: () {},
+//                 profiles: viewModel.items),
+          

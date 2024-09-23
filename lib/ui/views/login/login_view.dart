@@ -4,10 +4,10 @@ import 'package:thuprai_clone/base/validator/validator.dart';
 import 'package:thuprai_clone/base/widgets/base_gesture_detector.dart';
 import 'package:thuprai_clone/base/widgets/base_horizontal_line.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
+import 'package:thuprai_clone/base/widgets/base_text_field.dart';
 import 'package:thuprai_clone/base/widgets/button.dart';
 import 'package:thuprai_clone/base/widgets/base_app_bar.dart';
 import 'package:thuprai_clone/base/widgets/base_drawer.dart';
-import 'package:thuprai_clone/base/widgets/base_text_field.dart';
 import 'package:thuprai_clone/base/widgets/base_bottom_navigation_bar.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
@@ -81,8 +81,16 @@ class LoginView extends StackedView<LoginViewModel> {
                 BaseTextField(
                   controller: viewModel.passwordController,
                   labelText: "Password",
-                  obscureText: true,
+                  obscureText: !viewModel.isPasswordVisible,
                   validator: (value) => Validator.passwordValidator(value),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      viewModel.isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: viewModel.togglePasswordVisibility,
+                  ),
                 ),
                 Button(
                   text: 'Continue',
@@ -115,12 +123,16 @@ class LoginView extends StackedView<LoginViewModel> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: Icon(Icons.library_books),
+            label: 'My library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.more_horiz),
+            label: 'More',
           ),
         ],
       ),

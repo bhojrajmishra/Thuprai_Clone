@@ -25,6 +25,8 @@ class BaseTextField extends StatelessWidget {
   /// The type of keyboard to use for the text field.
   final TextInputType keyboardType;
 
+  final Widget? suffixIcon;
+
   /// Required constructor for the [BaseTextField] widget.
   const BaseTextField({
     required this.controller,
@@ -34,6 +36,7 @@ class BaseTextField extends StatelessWidget {
     this.enableSuggestions = true,
     this.autocorrect = true,
     this.keyboardType = TextInputType.text,
+    this.suffixIcon,
     super.key,
   });
 
@@ -54,6 +57,7 @@ class BaseTextField extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
         ),
+        suffixIcon: suffixIcon,
       ),
     );
   }
