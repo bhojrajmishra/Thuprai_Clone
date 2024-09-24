@@ -18,6 +18,8 @@ class LoginViewModel extends BaseViewModel {
   final SnackbarService _snackbarService = locator<SnackbarService>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  final List<Widget> pages = [];
+
   // BottomNavigationBar current index
   int currentIndex = 0;
 
@@ -28,10 +30,12 @@ class LoginViewModel extends BaseViewModel {
   void onTabTapped(int index) {
     currentIndex = index;
     notifyListeners();
-    // TODO: Implement navigation logic based on the tapped index
+
+    // Navigate to the selected page
+
     switch (index) {
       case 0:
-        _navigate.navigateTo(Routes.loginView);
+        _navigate.navigateTo(Routes.homeView);
         break;
       case 1:
         _navigate.navigateTo(Routes.loginView);
@@ -39,14 +43,21 @@ class LoginViewModel extends BaseViewModel {
       case 2:
         _navigate.navigateTo(Routes.loginView);
         break;
+      case 3:
+        _navigate.navigateTo(Routes.homeView);
+        break;
       default:
-        _navigate.navigateTo(Routes.loginView);
+        _navigate.navigateTo(Routes.homeView);
     }
   }
 
   // Method to navigate to the home screen after successful login
   void navigateToHome() {
     _navigate.navigateTo(Routes.homeView);
+  }
+
+  void navigateToSignUp() {
+    _navigate.navigateTo(Routes.detailView);
   }
 
   void requestgoogleSignIn() {

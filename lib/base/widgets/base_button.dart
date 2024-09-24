@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
-class Button extends StatelessWidget {
+class BaseButton extends StatelessWidget {
   final String text;
   final Function()? onPressed;
-  const Button({
+  final Color color;
+  final double? width;
+  final double? height;
+  const BaseButton({
     required this.text,
     required this.onPressed,
+    required this.color,
+    this.width,
+    this.height,
     super.key,
   });
 
@@ -14,11 +20,11 @@ class Button extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Material(
-        elevation: 5,
         borderRadius: BorderRadius.circular(10),
-        color: const Color.fromARGB(255, 7, 111, 196),
+        color: color,
         child: MaterialButton(
-          minWidth: double.infinity,
+          minWidth: width,
+          height: height,
           padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: onPressed, // add this here
           child: Text(text,

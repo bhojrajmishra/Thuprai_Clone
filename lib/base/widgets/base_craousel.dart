@@ -2,17 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-/// A custom carousel widget that displays a list of images with a tap action
-/// and a dot indicator for navigation.
 class BaseCarousel extends StatefulWidget {
   final List<String> imageUrls;
   final Function(int index) onTap;
-  final CarouselController controller;
+
   const BaseCarousel({
     Key? key,
     required this.imageUrls,
     required this.onTap,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -21,14 +18,13 @@ class BaseCarousel extends StatefulWidget {
 
 class _BaseCarouselState extends State<BaseCarousel> {
   int activeIndex = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         CarouselSlider.builder(
-          carouselController: _controller,
           itemCount: widget.imageUrls.length,
           itemBuilder: (context, index, realIndex) {
             final imageUrl = widget.imageUrls[index];
@@ -54,21 +50,27 @@ class _BaseCarouselState extends State<BaseCarousel> {
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
+            viewportFraction: 0.8,
+            onPageChanged: (index, reason) {
+              setState(() {
+                activeIndex = index;
+              });
+            },
           ),
+          carouselController: _controller,
         ),
-        const SizedBox(height: 10),
-        // Dot indicator
+        const SizedBox(height: 20),
         AnimatedSmoothIndicator(
           activeIndex: activeIndex,
           count: widget.imageUrls.length,
-          effect: ExpandingDotsEffect(
+          effect: const ExpandingDotsEffect(
             dotHeight: 10,
             dotWidth: 10,
-            activeDotColor: Colors.blueAccent,
-            dotColor: Colors.grey.shade400,
+            activeDotColor: Colors.blue,
+            dotColor: Colors.grey,
           ),
           onDotClicked: (index) {
-            // _controller.animateToPage(index);
+            _controller.animateToPage(index);
           },
         ),
       ],
