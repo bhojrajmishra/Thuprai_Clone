@@ -44,7 +44,7 @@ class LoginViewModel extends BaseViewModel {
         _navigate.navigateTo(Routes.loginView);
         break;
       case 3:
-        _navigate.navigateTo(Routes.homeView);
+        _navigate.navigateTo(Routes.cartView);
         break;
       default:
         _navigate.navigateTo(Routes.homeView);
@@ -87,7 +87,7 @@ class LoginViewModel extends BaseViewModel {
     try {
       // Create login request object from input values
       LoginRequest loginRequest = LoginRequest(
-        email: emailController.text,
+        username: emailController.text,
         password: passwordController.text,
       );
 

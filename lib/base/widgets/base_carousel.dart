@@ -1,5 +1,5 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BaseCarousel extends StatefulWidget {
@@ -18,12 +18,12 @@ class BaseCarousel extends StatefulWidget {
 
 class _BaseCarouselState extends State<BaseCarousel> {
   int activeIndex = 0;
-  final CarouselSliderController _controller =
-      CarouselSliderController(); // Use CarouselSliderController
+  final CarouselSliderController _controller = CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
+      alignment: Alignment.bottomCenter,
       children: [
         CarouselSlider.builder(
           itemCount: widget.imageUrls.length,
@@ -60,19 +60,28 @@ class _BaseCarouselState extends State<BaseCarousel> {
           ),
           carouselController: _controller,
         ),
-        const SizedBox(height: 20),
-        AnimatedSmoothIndicator(
-          activeIndex: activeIndex,
-          count: widget.imageUrls.length,
-          effect: const ExpandingDotsEffect(
-            dotHeight: 10,
-            dotWidth: 10,
-            activeDotColor: Colors.blue,
-            dotColor: Colors.grey,
+        Positioned(
+          bottom: 10,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.5),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: AnimatedSmoothIndicator(
+              activeIndex: activeIndex,
+              count: widget.imageUrls.length,
+              effect: const ExpandingDotsEffect(
+                dotHeight: 8,
+                dotWidth: 8,
+                activeDotColor: Colors.white,
+                dotColor: Colors.white54,
+              ),
+              onDotClicked: (index) {
+                _controller.animateToPage(index);
+              },
+            ),
           ),
-          onDotClicked: (index) {
-            _controller.animateToPage(index);
-          },
         ),
       ],
     );

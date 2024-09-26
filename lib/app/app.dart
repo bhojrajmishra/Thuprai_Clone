@@ -7,6 +7,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/ui/views/login/login_view.dart';
 import 'package:thuprai_clone/ui/views/detail/detail_view.dart';
+import 'package:thuprai_clone/ui/views/cart/cart_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -15,6 +16,7 @@ import 'package:thuprai_clone/ui/views/detail/detail_view.dart';
     MaterialRoute(page: StartupView),
     MaterialRoute(page: LoginView),
     MaterialRoute(page: DetailView),
+    MaterialRoute(page: CartView),
 // @stacked-route
   ],
   dependencies: [

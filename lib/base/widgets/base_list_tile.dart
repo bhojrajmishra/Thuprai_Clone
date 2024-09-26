@@ -5,7 +5,7 @@ class BaseListTile extends StatelessWidget {
   final String subtitle;
   final Icon? leading;
   final Icon? trailing;
-  BaseListTile({
+  const BaseListTile({
     super.key,
     required this.title,
     required this.subtitle,

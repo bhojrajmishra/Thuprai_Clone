@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/app/app.router.dart';
 
 class DetailViewModel extends BaseViewModel {
+  final NavigationService _navigation = NavigationService();
   final List<Item> items = [
     Item(
       imageUrl: 'https://media.thuprai.com/front_covers/sawarni.jpg',
@@ -34,6 +37,14 @@ class DetailViewModel extends BaseViewModel {
       description: 'Description ',
     ),
   ];
+
+  void onItemSelected(String slug) {
+    debugPrint(slug);
+  }
+
+  void NavigationToCart() {
+    _navigation.navigateTo(Routes.cartView);
+  }
 
   final descriptions = [
     Description(

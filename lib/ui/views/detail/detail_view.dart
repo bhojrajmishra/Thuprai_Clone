@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_app_bar.dart';
-import 'package:thuprai_clone/base/widgets/base_bottom_navigation_bar.dart';
+import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_divider.dart';
 import 'package:thuprai_clone/base/widgets/base_list_tile.dart';
 import 'package:thuprai_clone/base/widgets/base_outline_button.dart';
@@ -12,6 +12,7 @@ import 'detail_viewmodel.dart';
 class DetailView extends StackedView<DetailViewModel> {
   const DetailView({
     Key? key,
+    required slug,
   }) : super(key: key);
 
   @override
@@ -29,7 +30,9 @@ class DetailView extends StackedView<DetailViewModel> {
         ),
         IconButton(
           icon: const Icon(Icons.shopping_cart),
-          onPressed: () {},
+          onPressed: () {
+            viewModel.NavigationToCart();
+          },
         ),
       ]),
       backgroundColor: Colors.white,
@@ -115,33 +118,30 @@ class DetailView extends StackedView<DetailViewModel> {
                       },
                     ),
                   ),
-                  BaseBottomNavigationBar(
-                    currentIndex: 0,
-                    onTap: (index) => index,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.search),
-                        label: 'Search',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.shopping_cart),
-                        label: 'Cart',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.person),
-                        label: 'Profile',
-                      ),
-                    ],
-                  ),
                 ],
               ),
+              const BaseDivider(),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          BaseButton(
+              width: 150,
+              text: "Buy Now",
+              onPressed: () {},
+              color: Colors.blue),
+          horizontalSpaceMedium,
+          BaseButton(
+              width: 150,
+              text: "Add to Cart",
+              onPressed: () {
+                // viewModel.NavigationToCart();
+              },
+              color: Colors.blue),
+        ],
       ),
     );
   }

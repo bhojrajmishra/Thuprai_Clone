@@ -11,8 +11,9 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_shared/stacked_shared.dart';
-import 'package:thuprai_clone/ui/views/login/repository/login_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/login/service/login_service.dart';
+
+import '../ui/views/login/repository/login_repository_implementation.dart';
 
 final locator = StackedLocator.instance;
 

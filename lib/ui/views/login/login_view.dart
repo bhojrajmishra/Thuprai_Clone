@@ -39,7 +39,13 @@ class LoginView extends StackedView<LoginViewModel> {
           ),
         ],
       ),
-      drawer: const BaseDrawer(title: 'thuprai'),
+
+      drawer: BaseDrawer(
+        // Drawer for navigation
+        header: 'thuprai',
+        title: 'Library',
+        trailing: const Icon(Icons.book),
+      ),
 
       // Main body containing IndexedStack for navigation between views
       body: IndexedStack(
