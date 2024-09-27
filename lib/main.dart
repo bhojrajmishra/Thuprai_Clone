@@ -35,6 +35,7 @@ class MainApp extends StatelessWidget {
           navigatorObservers: [
             StackedService.routeObserver,
           ],
+          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
         );
       },
     );

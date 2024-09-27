@@ -3,18 +3,17 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
-import 'package:thuprai_clone/ui/views/login/model/login_request.dart';
-import 'package:thuprai_clone/ui/views/login/repository/login_repository_implementation.dart';
 
-class LoginViewModel extends BaseViewModel {
+class RegistrationViewModel extends BaseViewModel {
   // Text controllers for email and password input fields
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   // Services for navigation, login repository, and snackbar notifications
   final NavigationService _navigate = locator<NavigationService>();
-  final LoginRepositoryImpl _loginRepositoryImpl =
-      locator<LoginRepositoryImpl>();
+  // final LoginRepositoryImpl _loginRepositoryImpl =
+  //     locator<LoginRepositoryImpl>();
   final SnackbarService _snackbarService = locator<SnackbarService>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -26,8 +25,8 @@ class LoginViewModel extends BaseViewModel {
     _navigate.navigateTo(Routes.homeView);
   }
 
-  void navigateToSignUp() {
-    _navigate.navigateTo(Routes.registrationView);
+  void navigateToLogin() {
+    _navigate.navigateTo(Routes.loginView);
   }
 
   void requestgoogleSignIn() {
@@ -44,8 +43,9 @@ class LoginViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Method to handle login logic and API request
-  Future<void> requestLoginApi() async {
+  // Method to handle registration  logic and API request
+
+  Future<void> requestRegistrationApi() async {
     // Validate the form before proceeding
     if (!formKey.currentState!.validate()) {
       _snackbarService.showSnackbar(message: 'Please enter valid data');
@@ -56,22 +56,22 @@ class LoginViewModel extends BaseViewModel {
 
     try {
       // Create login request object from input values
-      LoginRequest loginRequest = LoginRequest(
-        username: emailController.text,
-        password: passwordController.text,
-      );
+      // LoginRequest loginRequest = LoginRequest(
+      //   username: emailController.text,
+      //   password: passwordController.text,
+      // );
 
-      // Make the API request using the repository
-      await _loginRepositoryImpl.requestLoginApi(loginRequest);
+      // Call the login repository to make the API request
+      // await _loginRepositoryImpl.login(loginRequest);
 
+      // Navigate to the home screen after successful login
       navigateToHome();
     } catch (e) {
-      _snackbarService.showSnackbar(message: 'Login failed: $e');
-      debugPrint('Login failed: $e');
-    } finally {
-      // Set the view to not busy (hides the loading spinner)
-      setBusy(false);
+      // Show error message if login fails
+      _snackbarService.showSnackbar(message: 'Login failed. Please try again');
     }
+
+    setBusy(false);
   }
 
   @override

@@ -24,7 +24,7 @@ class BaseBottomNavigationBar extends StatelessWidget {
       currentIndex: currentIndex,
       onTap: onTap,
       items: items,
-      backgroundColor: backgroundColor ?? Colors.white,
+      backgroundColor: Colors.black, //backgroundColor ?? Colors.black,
       selectedItemColor: selectedItemColor ?? Colors.black,
       unselectedItemColor: unselectedItemColor ??
           const Color.fromARGB(37, 22, 3, 3).withOpacity(0.6),

@@ -5,14 +5,18 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i7;
+import 'package:flutter/material.dart' as _i9;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i8;
+import 'package:stacked_services/stacked_services.dart' as _i10;
+import 'package:thuprai_clone/ui/views/bottomnavigationbar/bottomnavigationbar_view.dart'
+    as _i8;
 import 'package:thuprai_clone/ui/views/cart/cart_view.dart' as _i6;
 import 'package:thuprai_clone/ui/views/detail/detail_view.dart' as _i5;
 import 'package:thuprai_clone/ui/views/home/home_view.dart' as _i2;
 import 'package:thuprai_clone/ui/views/login/login_view.dart' as _i4;
+import 'package:thuprai_clone/ui/views/registration/registration_view.dart'
+    as _i7;
 import 'package:thuprai_clone/ui/views/startup/startup_view.dart' as _i3;
 
 class Routes {
@@ -26,12 +30,18 @@ class Routes {
 
   static const cartView = '/cart-view';
 
+  static const registrationView = '/registration-view';
+
+  static const bottomnavigationbarView = '/bottomnavigationbar-view';
+
   static const all = <String>{
     homeView,
     startupView,
     loginView,
     detailView,
     cartView,
+    registrationView,
+    bottomnavigationbarView,
   };
 }
 
@@ -57,37 +67,57 @@ class StackedRouter extends _i1.RouterBase {
       Routes.cartView,
       page: _i6.CartView,
     ),
+    _i1.RouteDef(
+      Routes.registrationView,
+      page: _i7.RegistrationView,
+    ),
+    _i1.RouteDef(
+      Routes.bottomnavigationbarView,
+      page: _i8.BottomnavigationbarView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i7.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i7.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.LoginView: (data) {
-      return _i7.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginView(),
         settings: data,
       );
     },
     _i5.DetailView: (data) {
       final args = data.getArgs<DetailViewArguments>(nullOk: false);
-      return _i7.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => _i5.DetailView(key: args.key, slug: args.slug),
         settings: data,
       );
     },
     _i6.CartView: (data) {
-      return _i7.MaterialPageRoute<dynamic>(
+      return _i9.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.CartView(),
+        settings: data,
+      );
+    },
+    _i7.RegistrationView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i7.RegistrationView(),
+        settings: data,
+      );
+    },
+    _i8.BottomnavigationbarView: (data) {
+      return _i9.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i8.BottomnavigationbarView(),
         settings: data,
       );
     },
@@ -106,7 +136,7 @@ class DetailViewArguments {
     required this.slug,
   });
 
-  final _i7.Key? key;
+  final _i9.Key? key;
 
   final dynamic slug;
 
@@ -127,7 +157,7 @@ class DetailViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i8.NavigationService {
+extension NavigatorStateExtension on _i10.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -171,7 +201,7 @@ extension NavigatorStateExtension on _i8.NavigationService {
   }
 
   Future<dynamic> navigateToDetailView({
-    _i7.Key? key,
+    _i9.Key? key,
     required dynamic slug,
     int? routerId,
     bool preventDuplicates = true,
@@ -195,6 +225,34 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.cartView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToRegistrationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.registrationView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToBottomnavigationbarView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.bottomnavigationbarView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -244,7 +302,7 @@ extension NavigatorStateExtension on _i8.NavigationService {
   }
 
   Future<dynamic> replaceWithDetailView({
-    _i7.Key? key,
+    _i9.Key? key,
     required dynamic slug,
     int? routerId,
     bool preventDuplicates = true,
@@ -268,6 +326,34 @@ extension NavigatorStateExtension on _i8.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.cartView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithRegistrationView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.registrationView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithBottomnavigationbarView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.bottomnavigationbarView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

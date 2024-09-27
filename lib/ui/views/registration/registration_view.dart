@@ -8,15 +8,15 @@ import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/base/widgets/base_text_field.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
-import 'login_viewmodel.dart';
+import 'registration_viewmodel.dart';
 
-class LoginView extends StackedView<LoginViewModel> {
-  const LoginView({Key? key}) : super(key: key);
+class RegistrationView extends StackedView<RegistrationViewModel> {
+  const RegistrationView({Key? key}) : super(key: key);
 
   @override
   Widget builder(
     BuildContext context,
-    LoginViewModel viewModel,
+    RegistrationViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
@@ -29,7 +29,7 @@ class LoginView extends StackedView<LoginViewModel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Please login to your account using',
+                  'Hi there! Welcome to Thuprai',
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -54,6 +54,13 @@ class LoginView extends StackedView<LoginViewModel> {
                 ),
                 BaseTextField(
                   controller: viewModel.emailController,
+                  labelText: "Full Name",
+                  obscureText: false,
+                  validator: (value) => Validator.emailValidator(value),
+                ),
+                const SizedBox(height: 23),
+                BaseTextField(
+                  controller: viewModel.emailController,
                   labelText: "Email",
                   obscureText: false,
                   validator: (value) => Validator.emailValidator(value),
@@ -75,21 +82,19 @@ class LoginView extends StackedView<LoginViewModel> {
                 ),
                 const SizedBox(height: 23),
                 BaseButton(
-                  text: 'Continue',
-                  onPressed: viewModel.requestLoginApi,
+                  text: 'Sign Up',
+                  onPressed: () {},
                   color: const Color.fromARGB(255, 45, 88, 231),
                   width: double.infinity,
                 ),
-                Row(
+                Column(
                   children: [
+                    SizedBox(height: 10),
+                    Text("Already have an account?"),
+                    SizedBox(height: 10),
                     BaseTextButton(
-                      onPressed: viewModel.navigateToHome,
-                      text: 'Forgot Password?',
-                    ),
-                    const Spacer(),
-                    BaseTextButton(
-                      onPressed: viewModel.navigateToSignUp,
-                      text: 'Sign Up',
+                      onPressed: viewModel.navigateToLogin,
+                      text: 'Login here!',
                     ),
                   ],
                 ),
@@ -102,8 +107,8 @@ class LoginView extends StackedView<LoginViewModel> {
   }
 
   @override
-  LoginViewModel viewModelBuilder(
+  RegistrationViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      LoginViewModel();
+      RegistrationViewModel();
 }

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -10,14 +12,6 @@ class CartViewModel extends BaseViewModel {
   CartViewModel();
 
   // Mock data for the button listview items
-
-  final List<String> buttonItems = [
-    'E-books',
-    'Audiobooks',
-    'Taskar',
-    'Drama',
-    'E-Kavita',
-  ];
 
   final List<Items> items = [
     Items(
@@ -53,18 +47,39 @@ class CartViewModel extends BaseViewModel {
   }
 
   void incrementItem(int index) {
-    itemDescriptions[index].price += 1;
+    if (itemDescriptions[index].price >= 0) {
+      itemDescriptions[index].price += 1;
+    }
     notifyListeners();
   }
 
   void decrementItem(int index) {
-    itemDescriptions[index].price -= 1;
+    if (itemDescriptions[index].price > 0) {
+      itemDescriptions[index].price -= 1;
+    }
+
     notifyListeners();
   }
 
   void updateCount(int index, int count) {
     itemDescriptions[index].price = count.toDouble();
     notifyListeners();
+  }
+
+  double totalPrice() {
+    double total = 0;
+    for (var item in itemDescriptions) {
+      total += item.price;
+    }
+    return total;
+  }
+
+  double discountAmount() {
+    return totalPrice() * 0.1;
+  }
+
+  double totalAmount() {
+    return totalPrice() - discountAmount();
   }
 
   void onAddItem() {

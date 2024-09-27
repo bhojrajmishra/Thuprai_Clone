@@ -6,6 +6,8 @@ class DioInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Perform actions before the request is sent (e.g., attach headers)
     debugPrint('Request: ${options.method} ${options.path}');
+    debugPrint('Headers: ${options.headers}');
+    debugPrint('Query Params: ${options.queryParameters}');
     handler.next(options); // Continue with the request
   }
 
