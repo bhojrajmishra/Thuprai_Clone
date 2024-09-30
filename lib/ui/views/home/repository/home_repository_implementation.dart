@@ -1,14 +1,24 @@
-// import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
-// import 'package:thuprai_clone/ui/views/home/repository/home_repository.dart';
-// import 'package:thuprai_clone/ui/views/home/service/home_service.dart';
+import 'package:flutter/material.dart';
+import 'package:thuprai_clone/app/app.locator.dart';
+import 'package:thuprai_clone/network/retro_client.dart';
+import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
+import 'package:thuprai_clone/ui/views/home/repository/home_repository.dart';
 
-// class HomeRepositoryImplementation implements BookRepository {
-//   final BookApiService _apiService;
+final RetroClient _retroClient = locator<RetroClient>();
 
-//   HomeRepositoryImplementation(this._apiService);
-
-//   @override
-//   Future<HomeResponseModel> getBooks() async {
-//     return await _apiService.getBooks();
-//   }
-// }
+class HomeRepositoryImplementation implements HomeRepository {
+  @override
+  Future<HomeResponseModel?> getBooks() async {
+    try {
+      final response = await _retroClient.getBooks();
+      if (response != null) {
+        debugPrint('Response: $response');
+        return response;
+      } else {
+        throw Exception('No data received');
+      }
+    } catch (e) {
+      throw Exception('An error occurred: $e');
+    }
+  }
+}

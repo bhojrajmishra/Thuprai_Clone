@@ -45,7 +45,7 @@ class DetailView extends StackedView<DetailViewModel> {
                 width: 500,
                 height: 250,
                 decoration: const BoxDecoration(
-                  color: Colors.red,
+                  color: Colors.white,
                 ),
                 padding: const EdgeInsets.only(
                     left: 10, right: 25.0, top: 25.0, bottom: 25.0),
@@ -76,9 +76,18 @@ class DetailView extends StackedView<DetailViewModel> {
                           Text(
                             viewModel.items[0].author,
                           ),
-                          Text(
-                            viewModel.items[0].description,
-                          ),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      const Color.fromARGB(70, 33, 177, 243),
+                                  shape: StadiumBorder(),
+                                  minimumSize: const Size(60, 20),
+                                  maximumSize: const Size(80, 20)),
+                              onPressed: () {},
+                              child: Text(
+                                'Add',
+                                style: TextStyle(color: Colors.black),
+                              )),
                         ],
                       ),
                     ]),
@@ -125,23 +134,26 @@ class DetailView extends StackedView<DetailViewModel> {
           ),
         ),
       ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          BaseButton(
-              width: 150,
-              text: "Buy Now",
-              onPressed: () {},
-              color: Colors.blue),
-          horizontalSpaceMedium,
-          BaseButton(
-              width: 150,
-              text: "Add to Cart",
-              onPressed: () {
-                // viewModel.NavigationToCart();
-              },
-              color: Colors.blue),
-        ],
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            BaseButton(
+                width: 150,
+                text: "Buy Now",
+                onPressed: () {},
+                color: Colors.blue),
+            horizontalSpaceMedium,
+            BaseButton(
+                width: 150,
+                text: "Add to Cart",
+                onPressed: () {
+                  viewModel.NavigationToCart();
+                },
+                color: Colors.blue),
+          ],
+        ),
       ),
     );
   }

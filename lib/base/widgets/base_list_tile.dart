@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class BaseListTile extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final Icon? leading;
   final Icon? trailing;
   const BaseListTile({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     this.leading,
     this.trailing,
   });
@@ -17,7 +17,7 @@ class BaseListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(subtitle),
+      subtitle: Text(subtitle ?? ''),
       leading: leading,
       trailing: trailing,
     );

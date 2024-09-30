@@ -4,8 +4,13 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 
-class BottomnavigationbarViewModel extends BaseViewModel {
+class BottomnavigationbarViewModel extends BaseViewModel with Initialisable {
   final NavigationService _navigationService = locator<NavigationService>();
+
+  @override
+  Future<void> initialise() async {
+    await Future.delayed(const Duration(seconds: 2));
+  }
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;

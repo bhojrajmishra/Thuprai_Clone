@@ -1,8 +1,15 @@
+import 'package:dio/dio.dart';
+import 'package:retrofit/error_logger.dart';
+import 'package:retrofit/http.dart';
 import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
+import 'package:thuprai_clone/utils/api_path.dart';
 
+part 'retro_client.g.dart';
+
+@RestApi(baseUrl: ApiPath.baseUrl)
 abstract class RetroClient {
-  Future<HomeResponseModel> get(String url, {Map<String, String> headers});
+  factory RetroClient(Dio dio, {String? baseUrl}) = _RetroClient;
 
-  Future<HomeResponseModel> post(String url,
-      {Map<String, String> headers, dynamic body});
+  @GET('index/')
+  Future<HomeResponseModel?> getBooks();
 }

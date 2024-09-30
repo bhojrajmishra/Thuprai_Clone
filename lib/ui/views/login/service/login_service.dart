@@ -19,10 +19,8 @@ class LoginService {
         throw Exception('Failed to login: ${response.statusMessage}');
       }
     } on DioException catch (e) {
-      // Rethrow the Dio-specific error so it can be handled in the ViewModel
       throw Exception('Dio error: ${e.message}');
     } catch (e) {
-      // Catch all other exceptions and throw them
       throw Exception('An error occurred: $e');
     }
   }

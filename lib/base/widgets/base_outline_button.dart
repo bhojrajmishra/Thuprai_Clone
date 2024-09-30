@@ -14,9 +14,12 @@ class BaseOutlineButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
         onPressed: onPressed,
-        style: ButtonStyle(
-            side: WidgetStateProperty.all(BorderSide(
-                color: Colors.blue, width: 1.0, style: BorderStyle.solid))),
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Colors.blue),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(),
+          ),
+        ),
         child: ListTile(
           title: Text(title),
           subtitle: Text(subtitle),

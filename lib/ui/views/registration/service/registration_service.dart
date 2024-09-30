@@ -15,7 +15,7 @@ class RegistrationService {
     debugPrint("Payload: $payload");
     try {
       Response response = await Dio().post(
-        ApiPath.registerUrl,
+        ApiPath.loginUrl,
         data: payload,
         options: Options(
           headers: {

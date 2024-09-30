@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_carousel.dart';
@@ -26,14 +27,14 @@ class HomeView extends StackedView<HomeViewModel> {
               // Carousel
               Center(
                 child: BaseCarousel(
-                  imageUrls: [viewModel.items[0].imageUrl],
+                  imageUrls: viewModel.items.map((e) => e.imageUrl).toList(),
                   onTap: (index) => index,
                 ),
               ),
               //  First section of BaseListView
               SizedBox(
-                height:
-                    80, // Increased height to accommodate BaseButton's top padding
+                height: 80
+                    .h, // Increased height to accommodate BaseButton's top padding
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: viewModel.buttonItems.length,
@@ -54,8 +55,9 @@ class HomeView extends StackedView<HomeViewModel> {
                   },
                 ),
               ),
-              verticalSpaceMedium,
-
+              SizedBox(
+                width: 50.w,
+              ),
               Row(
                 children: [
                   const Text(
@@ -73,7 +75,7 @@ class HomeView extends StackedView<HomeViewModel> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 150, // Set a fixed height for the horizontal list
+                height: 150.h, // Set a fixed height for the horizontal list
                 child: BaseListView(
                   title: viewModel.items[0].title,
                   onTap: () {

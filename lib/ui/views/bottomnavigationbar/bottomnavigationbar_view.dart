@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_badge.dart';
+import 'package:thuprai_clone/base/widgets/base_bottom_navigation_bar.dart';
 import 'bottomnavigationbar_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/home/home_view.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_view.dart';
@@ -39,18 +40,17 @@ class BottomnavigationbarView
         title: 'Library',
         trailing: const Icon(Icons.book),
       ),
-      body: IndexedStack(
-        index: viewModel.currentIndex,
-        children: [
-          const HomeView(),
-          const CartView(),
-          const LoginView(),
-          const Placeholder(), // Replace with MoreView when available
+      body: PageView(
+        children: const [
+          HomeView(),
+          CartView(),
+          LoginView(),
+          LoginView(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BaseBottomNavigationBar(
         currentIndex: viewModel.currentIndex,
-        onTap: viewModel.onTabTapped,
+        onTap: viewModel.setIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

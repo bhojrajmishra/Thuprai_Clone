@@ -35,8 +35,6 @@ class CartViewModel extends BaseViewModel {
 
   List<ItemDescription> itemDescriptions = [
     ItemDescription(name: "hshfew", price: 200),
-    ItemDescription(name: "hshfew", price: 200),
-    ItemDescription(name: "hshfew", price: 200),
   ];
 
   void onItemSelected(String slug) {
