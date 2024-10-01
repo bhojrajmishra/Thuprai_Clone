@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BaseButton extends StatelessWidget {
-  final String text;
+  final String? text;
   final Function()? onPressed;
   final Color color;
   final double? width;
@@ -27,7 +27,7 @@ class BaseButton extends StatelessWidget {
           height: height,
           padding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           onPressed: onPressed, // add this here
-          child: Text(text,
+          child: Text(text as String,
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 15)
                   .copyWith(color: Colors.white, fontWeight: FontWeight.bold)),

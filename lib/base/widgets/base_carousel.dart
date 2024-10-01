@@ -37,7 +37,7 @@ class _BaseCarouselState extends State<BaseCarousel> {
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
                     image: NetworkImage(imageUrl!),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
@@ -45,7 +45,7 @@ class _BaseCarouselState extends State<BaseCarousel> {
           },
           options: CarouselOptions(
             height: 200,
-            enlargeCenterPage: true,
+            enlargeCenterPage: false,
             autoPlay: true,
             aspectRatio: 16 / 9,
             autoPlayCurve: Curves.fastOutSlowIn,
@@ -74,8 +74,8 @@ class _BaseCarouselState extends State<BaseCarousel> {
               effect: const ExpandingDotsEffect(
                 dotHeight: 8,
                 dotWidth: 8,
-                activeDotColor: Colors.white,
-                dotColor: Colors.white54,
+                activeDotColor: Colors.blue,
+                dotColor: Color.fromARGB(113, 255, 255, 255),
               ),
               onDotClicked: (index) {
                 _controller.animateToPage(index);

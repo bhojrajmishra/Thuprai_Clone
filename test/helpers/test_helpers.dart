@@ -10,13 +10,23 @@ import 'test_helpers.mocks.dart';
   MockSpec<NavigationService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<BottomSheetService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<SnackbarService>(onMissingStub: OnMissingStub.returnDefault),
+
   // @stacked-mock-spec
 ])
 void registerServices() {
   getAndRegisterNavigationService();
   getAndRegisterBottomSheetService();
   getAndRegisterDialogService();
+  getAndRegisterSnackbarService();
   // @stacked-mock-register
+}
+
+MockSnackbarService getAndRegisterSnackbarService() {
+  _removeRegistrationIfExists<SnackbarService>();
+  final service = MockSnackbarService();
+  locator.registerSingleton<SnackbarService>(service);
+  return service;
 }
 
 MockNavigationService getAndRegisterNavigationService() {

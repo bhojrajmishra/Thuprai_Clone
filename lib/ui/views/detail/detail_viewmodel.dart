@@ -5,6 +5,7 @@ import 'package:thuprai_clone/app/app.router.dart';
 
 class DetailViewModel extends BaseViewModel {
   final NavigationService _navigation = NavigationService();
+
   final List<Item> items = [
     Item(
       imageUrl: 'https://media.thuprai.com/front_covers/sawarni.jpg',

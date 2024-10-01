@@ -64,8 +64,8 @@ class _BaseCarouselState extends State<BaseCarousel> {
           activeIndex: activeIndex,
           count: widget.imageUrls.length,
           effect: const ExpandingDotsEffect(
-            dotHeight: 10,
-            dotWidth: 10,
+            dotHeight: 5,
+            dotWidth: 5,
             activeDotColor: Colors.blue,
             dotColor: Colors.grey,
           ),
