@@ -32,8 +32,7 @@ class BottomnavigationbarViewModel extends BaseViewModel {
         _navigationService.navigateTo(Routes.loginView);
         break;
       case 3:
-        // Navigate to More view (you may need to create this route)
-        // _navigationService.navigateTo(Routes.moreView);
+        _navigationService.navigateTo(Routes.registrationView);
         break;
     }
   }

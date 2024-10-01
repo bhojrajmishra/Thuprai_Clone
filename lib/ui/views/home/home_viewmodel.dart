@@ -7,75 +7,86 @@ import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
 
 class HomeViewModel extends BaseViewModel with Initialisable {
-  final HomeRepositoryImplementation _homeRepositoryImplementation =
+  final HomeRepositoryImplementation _homeRepository =
       locator<HomeRepositoryImplementation>();
   final NavigationService _navigation = locator<NavigationService>();
+
+  HomeResponseModel? fetchData;
+
+  List<String> featuredImageUrls = [];
+  List<String> featuredTitles = [];
+  List<String> ebookCoverUrls = [];
+  List<String> ebookTitles = [];
+  List<String> audiobookCoverUrls = [];
+  List<String> audiobookTitles = [];
+  List<String> newReleaseCoverUrls = [];
+  List<String> newReleaseTitles = [];
+  List<String> bestSellerCoverUrls = [];
+  List<String> bestSellerTitles = [];
 
   @override
   Future<void> initialise() async {
     await getBooks();
   }
 
-  HomeResponseModel? fetchData = HomeResponseModel();
-
-  void navigateToBookDetails({required String slug}) {
-    // Navigate to the book details page
-    _navigation.navigateTo(Routes.detailView);
-  }
-
-  // void navigateToAllViewBook({required String slug}) {
-  //   // Navigate to the book details page
-  //   _navigation.navigateTo(Routes.allBooksView);
-  // }
-
   Future<void> getBooks() async {
-    setBusy(true);
     try {
-      final response = await _homeRepositoryImplementation.getBooks();
-      if (response != null) {
-        debugPrint('Response: $response');
-        fetchData = response;
-        debugPrint('Response: $fetchData');
-      } else {
-        throw Exception('No data received');
-      }
+      setBusy(true);
+      fetchData = await _homeRepository.getBooks();
+      _updateMappedLists();
+      notifyListeners();
     } catch (e) {
-      throw Exception('An error occurred: $e');
+      setError(e);
+      debugPrint('Error fetching books: $e');
     } finally {
       setBusy(false);
     }
   }
 
-// void onViewAllTapped() {
-//     debugPrint('View all tapped');
-//     _navigation.navigateTo(Routes.allBooksView);
-//     debugPrint('Navigating to all books view');
-//   }
+  void _updateMappedLists() {
+    featuredImageUrls =
+        fetchData?.featured?.map((e) => e.image ?? '').toList() ?? [];
+    featuredTitles =
+        fetchData?.featured?.map((e) => e.title ?? '').toList() ?? [];
 
-  void onItemSelected(String slug) {
-    debugPrint('Item selected: $slug');
-    navigateToBookDetails(
-      slug: slug,
-    );
+    ebookCoverUrls =
+        fetchData?.ebooks?.map((e) => e.frontCover ?? '').toList() ?? [];
+    ebookTitles = fetchData?.ebooks?.map((e) => e.title ?? '').toList() ?? [];
 
-    debugPrint('Navigating to detail view');
+    audiobookCoverUrls =
+        fetchData?.audiobooks?.map((e) => e.frontCover ?? '').toList() ?? [];
+    audiobookTitles =
+        fetchData?.audiobooks?.map((e) => e.title ?? '').toList() ?? [];
+
+    newReleaseCoverUrls =
+        fetchData?.newReleases?.map((e) => e.frontCover ?? '').toList() ?? [];
+    newReleaseTitles =
+        fetchData?.newReleases?.map((e) => e.title ?? '').toList() ?? [];
+
+    bestSellerCoverUrls =
+        fetchData?.bestsellingEbooks?.map((e) => e.frontCover ?? '').toList() ??
+            [];
+    bestSellerTitles =
+        fetchData?.bestsellingEbooks?.map((e) => e.title ?? '').toList() ?? [];
   }
 
-  void onButtonSelected(String text) {
-    debugPrint('Button selected: $text');
+  void onItemSelected(String slug) {
+    navigateToBookDetails(slug: slug);
+    debugPrint(slug);
+  }
 
-    _navigation.navigateTo(Routes.cartView);
-
-    debugPrint('Navigating to cart view');
+  void navigateToBookDetails({required String slug}) {
+    _navigation.navigateTo(
+      Routes.detailView,
+      arguments: DetailViewArguments(slug: slug),
+    );
   }
 
   void onCarouselItemTapped(int index) {
-    debugPrint('Carousel item tapped: $index');
-
-    _navigation.navigateTo(
-      Routes.detailView,
-      arguments: DetailViewArguments(slug: fetchData!.featured![index].slug),
-    );
-    debugPrint('Book slug: ${fetchData!.featured![index].slug}');
+    if (index < (fetchData?.featured?.length ?? 0)) {
+      navigateToBookDetails(slug: fetchData?.featured?[index].slug ?? '');
+      debugPrint('Tapped on carousel item $index');
+      debugPrint(fetchData?.featured?[index].slug ?? '');
+    }
   }
 }

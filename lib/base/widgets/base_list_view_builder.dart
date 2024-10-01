@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class BaseListView extends StatelessWidget {
   final List<String?> imageUrl;
   final List<String?> title;
-  final Function onTap;
+  final Function(int index) onTap; // Updated onTap to accept index
   final List<String?> profiles;
 
   const BaseListView({
@@ -22,26 +22,18 @@ class BaseListView extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
-          onTap: () => onTap(index),
+          onTap: () => onTap(index), // Pass the index to onTap
           child: Column(
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.grey.withOpacity(0.2),
-                  //     spreadRadius: 3,
-                  //     blurRadius: 5,
-                  //     offset: const Offset(0, 3),
-                  //   ),
-                  // ],
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    imageUrl[index]!,
+                    imageUrl[index] ?? 'https://via.placeholder.com/150',
                     fit: BoxFit.contain,
                     width: 100,
                     height: 100,
@@ -50,7 +42,7 @@ class BaseListView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                title[index]!,
+                title[index] ?? 'No Title',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
