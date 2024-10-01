@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BaseCarousel extends StatefulWidget {
-  final List<String> imageUrls;
+  final List<String?> imageUrls;
   final Function(int index) onTap;
 
   const BaseCarousel({
@@ -36,7 +36,7 @@ class _BaseCarouselState extends State<BaseCarousel> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: NetworkImage(imageUrl),
+                    image: NetworkImage(imageUrl!),
                     fit: BoxFit.cover,
                   ),
                 ),

@@ -29,9 +29,12 @@ class BottomnavigationbarView
             onPressed: () {},
           ),
           IconButton(
-            icon:
-                Badge(label: Text("3"), child: const Icon(Icons.shopping_cart)),
-            onPressed: () {},
+            icon: Badge(
+                label: Text(viewModel.cartItemCount.toString()),
+                child: const Icon(Icons.shopping_cart)),
+            onPressed: () {
+              viewModel.navigateToCart();
+            },
           ),
         ],
       ),
@@ -50,7 +53,6 @@ class BottomnavigationbarView
       ),
       bottomNavigationBar: BaseBottomNavigationBar(
         currentIndex: viewModel.currentIndex,
-        onTap: viewModel.setIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

@@ -9,16 +9,7 @@ final RetroClient _retroClient = locator<RetroClient>();
 class HomeRepositoryImplementation implements HomeRepository {
   @override
   Future<HomeResponseModel?> getBooks() async {
-    try {
-      final response = await _retroClient.getBooks();
-      if (response != null) {
-        debugPrint('Response: $response');
-        return response;
-      } else {
-        throw Exception('No data received');
-      }
-    } catch (e) {
-      throw Exception('An error occurred: $e');
-    }
+    final data = await _retroClient.getBooks();
+    return data;
   }
 }

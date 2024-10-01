@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stacked/stacked.dart';
-import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_carousel.dart';
 import 'package:thuprai_clone/base/widgets/base_list_view_builder.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
@@ -17,6 +16,7 @@ class HomeView extends StackedView<HomeViewModel> {
     HomeViewModel viewModel,
     Widget? child,
   ) {
+    final data = viewModel.fetchData;
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -27,34 +27,34 @@ class HomeView extends StackedView<HomeViewModel> {
               // Carousel
               Center(
                 child: BaseCarousel(
-                  imageUrls: viewModel.items.map((e) => e.imageUrl).toList(),
+                  imageUrls: data!.featured!.map((e) => e.image).toList(),
                   onTap: (index) => index,
                 ),
               ),
               //  First section of BaseListView
-              SizedBox(
-                height: 80
-                    .h, // Increased height to accommodate BaseButton's top padding
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: viewModel.buttonItems.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: BaseButton(
-                        text: viewModel.buttonItems[index].text,
-                        onPressed: () {
-                          viewModel.onButtonSelected(
-                            viewModel.buttonItems[index].text,
-                          );
-                        },
-                        color: const Color.fromARGB(154, 68, 171, 255),
-                        // width: 10, // Set a fixed width for the button
-                      ),
-                    );
-                  },
-                ),
-              ),
+              // SizedBox(
+              //   height:
+              //       80, // Increased height to accommodate BaseButton's top padding
+              //   child: ListView.builder(
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: viewModel.buttonItems.length,
+              //     itemBuilder: (BuildContext context, int index) {
+              //       return Padding(
+              //         padding: const EdgeInsets.only(right: 8.0),
+              //         child: BaseButton(
+              //           text: viewModel.buttonItems[index].text,
+              //           onPressed: () {
+              //             viewModel.onButtonSelected(
+              //                data.
+              //             );
+              //           },
+              //           color: const Color.fromARGB(154, 68, 171, 255),
+              //           // width: 10, // Set a fixed width for the button
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               SizedBox(
                 width: 50.w,
               ),
@@ -75,18 +75,18 @@ class HomeView extends StackedView<HomeViewModel> {
               ),
               const SizedBox(height: 10),
               SizedBox(
-                height: 150.h, // Set a fixed height for the horizontal list
+                height: 150, // Set a fixed height for the horizontal list
                 child: BaseListView(
-                  title: viewModel.items[0].title,
+                  title: data.featured?[1].title ?? 'No Title',
                   onTap: () {
                     viewModel.onItemSelected(
-                      viewModel.items[0].title,
+                      data.newReleases?[0].title,
                     );
                   },
-                  profiles: viewModel.items,
+                  imageUrl: data.featured!.map((e) => e.image).toList(),
+                  profiles: data.featured!.map((e) => e.image).toList(),
                 ),
               ),
-              verticalSpaceMedium,
 
               // Second section of BaseListView
               Row(
@@ -103,15 +103,19 @@ class HomeView extends StackedView<HomeViewModel> {
               SizedBox(
                 height: 150, // Set a fixed height for the horizontal list
                 child: BaseListView(
-                  title: viewModel.items[0].title,
+                  title: data.newReleases?[1].title ?? 'No Title',
                   onTap: () {
-                    viewModel.onItemSelected(viewModel.items[0].title);
+                    viewModel.onItemSelected(
+                      data.newReleases![0].title,
+                    );
                   },
-                  profiles: viewModel.items,
+
+                  imageUrl: data.newReleases!.map((e) => e.frontCover).toList(),
+                  profiles: data.newReleases!.map((e) => e.frontCover).toList(),
+                  // Add image
                 ),
               ),
               verticalSpaceMedium,
-
               // Third section of BaseListView
               Row(
                 children: [
@@ -133,11 +137,14 @@ class HomeView extends StackedView<HomeViewModel> {
               SizedBox(
                 height: 150, // Set a fixed height for the horizontal list
                 child: BaseListView(
-                  title: viewModel.items[0].title,
+                  title: data.ebooks?[1].title ?? 'No Title',
                   onTap: () {
-                    viewModel.onItemSelected(viewModel.items[0].title);
+                    viewModel.onItemSelected(
+                      data.ebooks![0].title,
+                    );
                   },
-                  profiles: viewModel.items,
+                  imageUrl: data.ebooks!.map((e) => e.frontCover).toList(),
+                  profiles: data.ebooks!.map((e) => e.frontCover).toList(),
                 ),
               ),
             ],
@@ -150,23 +157,3 @@ class HomeView extends StackedView<HomeViewModel> {
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
 }
-
-//  const SizedBox(height: 10),
-//         SizedBox(
-//           height: 150,
-//           child: BaseListView(
-//             title: title,
-//             onTap: (index) {
-//               viewModel.onItemSelected(books[index].slug);
-//             },
-//             profiles: books
-//                 .map((book) => BookListItem(
-//                       title: book.title,
-//                       imageUrl: book.frontCover,
-//                     ))
-//                 .toList(),
-//           ),
-//         ),
-//       ],
-//     );
-//   }

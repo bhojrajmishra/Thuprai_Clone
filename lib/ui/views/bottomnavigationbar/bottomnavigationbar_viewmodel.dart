@@ -4,19 +4,18 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 
-class BottomnavigationbarViewModel extends BaseViewModel with Initialisable {
+class BottomnavigationbarViewModel extends BaseViewModel {
   final NavigationService _navigationService = locator<NavigationService>();
-
-  @override
-  Future<void> initialise() async {
-    await Future.delayed(const Duration(seconds: 2));
-  }
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
 
   void setIndex(int index) {
     _currentIndex = index;
+    notifyListeners();
+  }
+
+  void cartItemCount() {
     notifyListeners();
   }
 
@@ -37,5 +36,9 @@ class BottomnavigationbarViewModel extends BaseViewModel with Initialisable {
         // _navigationService.navigateTo(Routes.moreView);
         break;
     }
+  }
+
+  void navigateToCart() {
+    _navigationService.navigateTo(Routes.cartView);
   }
 }

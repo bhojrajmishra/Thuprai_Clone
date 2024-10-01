@@ -94,6 +94,16 @@ class CartViewModel extends BaseViewModel {
   }
 }
 
+// void cartItemCount() {
+//   int cartItemCount() {
+//     int count = 0;
+//     for (var item in items) {
+//       count += item.quantity!;
+//     }
+//     return count;
+//   }
+// }
+
 class ItemDescription {
   final String name;
   double price;
