@@ -2,6 +2,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -11,6 +12,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<BottomSheetService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<SnackbarService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<HomeRepositoryImplementation>(
+      onMissingStub: OnMissingStub.returnDefault),
 
   // @stacked-mock-spec
 ])
@@ -19,6 +22,8 @@ void registerServices() {
   getAndRegisterBottomSheetService();
   getAndRegisterDialogService();
   getAndRegisterSnackbarService();
+  getAndRegisterHomeRepositoryImplementation();
+
   // @stacked-mock-register
 }
 
@@ -26,6 +31,13 @@ MockSnackbarService getAndRegisterSnackbarService() {
   _removeRegistrationIfExists<SnackbarService>();
   final service = MockSnackbarService();
   locator.registerSingleton<SnackbarService>(service);
+  return service;
+}
+
+MockHomeRepositoryImplementation getAndRegisterHomeRepositoryImplementation() {
+  _removeRegistrationIfExists<HomeRepositoryImplementation>();
+  final service = MockHomeRepositoryImplementation();
+  locator.registerSingleton<HomeRepositoryImplementation>(service);
   return service;
 }
 

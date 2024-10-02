@@ -13,29 +13,9 @@ class CartViewModel extends BaseViewModel {
 
   // Mock data for the button listview items
 
-  final List<Items> items = [
-    Items(
-        imageUrl:
-            'https://media.thuprai.com/__sized__/front_covers/music-myth-and-melody-f-thumbnail-100x145-70.jpg',
-        title: 'title1',
-        quantity: 1),
-    Items(
-        imageUrl:
-            'https://media.thuprai.com/__sized__/front_covers/music-myth-and-melody-f-thumbnail-100x145-70.jpg',
-        title: 'title1'),
-    Items(
-        imageUrl:
-            'https://media.thuprai.com/__sized__/front_covers/music-myth-and-melody-f-thumbnail-100x145-70.jpg',
-        title: 'title1'),
-    Items(
-        imageUrl:
-            'https://media.thuprai.com/__sized__/front_covers/music-myth-and-melody-f-thumbnail-100x145-70.jpg',
-        title: 'title1'),
-  ];
+  final List<Items> items = [];
 
-  List<ItemDescription> itemDescriptions = [
-    ItemDescription(name: "hshfew", price: 200),
-  ];
+  List<ItemDescription> itemDescriptions = [];
 
   void onItemSelected(String slug) {
     _navigation.navigateTo(

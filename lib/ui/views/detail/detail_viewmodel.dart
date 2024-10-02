@@ -26,7 +26,8 @@ class DetailViewModel extends BaseViewModel {
     }
   }
 
-  void navigationToCart() {
+  void navigationToCart(
+      int id, String nepaliTitle, String frontCover, double price) {
     _navigation.navigateTo(Routes.cartView);
   }
 }

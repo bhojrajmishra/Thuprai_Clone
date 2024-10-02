@@ -35,7 +35,12 @@ class DetailView extends StackedView<DetailViewModel> {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              viewModel.navigationToCart();
+              viewModel.navigationToCart(
+                viewModel.bookData?.id ?? 0,
+                viewModel.bookData?.nepaliTitle ?? '',
+                viewModel.bookData?.frontCover ?? '',
+                viewModel.bookData?.paperback?.sellingPrice ?? 0,
+              );
             },
           ),
         ],
@@ -145,7 +150,7 @@ class DetailView extends StackedView<DetailViewModel> {
                                   ),
                                   horizontalSpaceSmall,
                                   Text(
-                                    auther?.photo ?? '',
+                                    auther?.name ?? '',
                                   ),
                                 ],
                               );
@@ -167,7 +172,16 @@ class DetailView extends StackedView<DetailViewModel> {
             BaseButton(
               width: 150,
               text: "Buy Now",
-              onPressed: () {},
+              onPressed: () {
+                debugPrint('Buy now');
+
+                viewModel.navigationToCart(
+                  viewModel.bookData?.id ?? 0,
+                  viewModel.bookData?.nepaliTitle ?? '',
+                  viewModel.bookData?.frontCover ?? '',
+                  viewModel.bookData?.paperback?.sellingPrice ?? 0,
+                );
+              },
               color: Colors.blue,
             ),
             horizontalSpaceMedium,
@@ -175,7 +189,19 @@ class DetailView extends StackedView<DetailViewModel> {
               width: 150,
               text: "Add to Cart",
               onPressed: () {
-                viewModel.navigationToCart();
+                viewModel.navigationToCart(
+                  viewModel.bookData?.id ?? 0,
+                  viewModel.bookData?.nepaliTitle ?? '',
+                  viewModel.bookData?.frontCover ?? '',
+                  viewModel.bookData?.paperback?.sellingPrice ?? 0,
+                );
+                debugPrint('Add to cart');
+                debugPrint('Book id: ${viewModel.bookData?.id}');
+                debugPrint('Book title: ${viewModel.bookData?.nepaliTitle}');
+                debugPrint(
+                    'Book front cover: ${viewModel.bookData?.frontCover}');
+                debugPrint(
+                    'Book price: ${viewModel.bookData?.paperback?.sellingPrice}');
               },
               color: Colors.blue,
             ),

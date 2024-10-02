@@ -10,6 +10,10 @@ import 'package:flutter/material.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
 import 'package:stacked_services/stacked_services.dart' as _i2;
+import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart'
+    as _i8;
+import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart'
+    as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -797,4 +801,20 @@ class MockSnackbarService extends _i1.Mock implements _i2.SnackbarService {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+}
+
+/// A class which mocks [HomeRepositoryImplementation].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockHomeRepositoryImplementation extends _i1.Mock
+    implements _i7.HomeRepositoryImplementation {
+  @override
+  _i5.Future<_i8.HomeResponseModel?> getBooks() => (super.noSuchMethod(
+        Invocation.method(
+          #getBooks,
+          [],
+        ),
+        returnValue: _i5.Future<_i8.HomeResponseModel?>.value(),
+        returnValueForMissingStub: _i5.Future<_i8.HomeResponseModel?>.value(),
+      ) as _i5.Future<_i8.HomeResponseModel?>);
 }

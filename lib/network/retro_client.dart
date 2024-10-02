@@ -24,7 +24,6 @@ abstract class RetroClient {
   Future<LoginResponse> login(@Body() LoginRequest loginRequest);
   @GET("book/{slug}")
   Future<BookModel> getBookData(@Path("slug") String slug);
-  // Future<AddCartRequest> addCart(@Body() AddCartRequest addToCart);
   @GET("api/logout/")
   Future<void> logout();
 }

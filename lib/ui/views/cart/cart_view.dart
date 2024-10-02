@@ -66,20 +66,22 @@ class CartView extends StackedView<CartViewModel> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            'Subtotal',
+                            'Subtotal' + viewModel.totalPrice().toString(),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Discount',
+                            'Discount' + viewModel.discountAmount().toString(),
                           ),
                           const Divider(height: 24),
                           Text(
-                            'Total',
+                            'Total' + viewModel.totalAmount().toString(),
                           ),
                           const SizedBox(height: 16),
                           BaseButton(
                             text: 'Checkout',
-                            onPressed: () {},
+                            onPressed: () {
+                              // viewModel.onCheckout();
+                            },
                             color: const Color.fromARGB(255, 33, 100, 243),
                           )
                         ],
