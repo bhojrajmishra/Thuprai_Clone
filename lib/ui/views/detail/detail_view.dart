@@ -10,9 +10,11 @@ import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'detail_viewmodel.dart';
 
 class DetailView extends StackedView<DetailViewModel> {
+  final String slug;
+
   const DetailView({
     Key? key,
-    required slug,
+    required this.slug,
   }) : super(key: key);
 
   @override
@@ -22,136 +24,161 @@ class DetailView extends StackedView<DetailViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      appBar:
-          BaseAppBar(title: "title", backgroundColor: Colors.white, actions: [
-        IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () {
-            viewModel.NavigationToCart();
-          },
-        ),
-      ]),
+      appBar: BaseAppBar(
+        title: viewModel.bookData?.nepaliTitle ?? "Book Details",
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: const Icon(Icons.shopping_cart),
+            onPressed: () {
+              viewModel.navigationToCart();
+            },
+          ),
+        ],
+      ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                width: 500,
-                height: 250,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.only(
-                    left: 10, right: 25.0, top: 25.0, bottom: 25.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(
-                          viewModel.items[0].imageUrl,
-                          width: 150,
-                          height: 200,
-                          fit: BoxFit.cover,
-                        ),
+      body: viewModel.isBusy
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 500,
+                      height: 250,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
                       ),
-                      horizontalSpaceMedium,
-                      Column(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 25.0, top: 25.0, bottom: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            viewModel.items[0].title,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              viewModel.bookData?.frontCover ?? '',
+                              width: 150,
+                              height: 200,
+                              fit: BoxFit.fitHeight,
                             ),
                           ),
-                          Text(
-                            viewModel.items[0].author,
+                          horizontalSpaceMedium,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  viewModel.bookData?.nepaliTitle ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  viewModel.bookData?.authors
+                                          ?.map((author) => author.name)
+                                          .join(', ') ??
+                                      '',
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        const Color.fromARGB(70, 33, 177, 243),
+                                    shape: StadiumBorder(),
+                                  ),
+                                  onPressed: () {},
+                                  child: Text(
+                                    viewModel.bookData?.categories?[0].name ??
+                                        '',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      const Color.fromARGB(70, 33, 177, 243),
-                                  shape: StadiumBorder(),
-                                  minimumSize: const Size(60, 20),
-                                  maximumSize: const Size(80, 20)),
-                              onPressed: () {},
-                              child: Text(
-                                'Add',
-                                style: TextStyle(color: Colors.black),
-                              )),
                         ],
                       ),
-                    ]),
-              ),
-              verticalSpaceMedium,
-              BaseOutlineButton(
-                title: 'Paperback',
-                subtitle: 'Rs.750',
-                onPressed: () {},
-              ),
-              BaseListTile(
-                  title: viewModel.descriptions[0].title,
-                  subtitle: viewModel.descriptions[0].subtitle),
-              const BaseDivider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: viewModel.publishers.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Text(
-                              viewModel.publishers.keys.elementAt(index),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            horizontalSpaceSmall,
-                            Text(
-                              viewModel.publishers.values.elementAt(index),
-                            ),
-                          ],
-                        );
-                      },
                     ),
-                  ),
-                ],
+                    verticalSpaceMedium,
+                    BaseOutlineButton(
+                      title: 'Paperback',
+                      subtitle:
+                          'Rs. ${viewModel.bookData?.paperback?.sellingPrice}',
+                      onPressed: () {},
+                    ),
+                    horizontalSpaceMedium,
+                    BaseOutlineButton(
+                      title: 'Ebook',
+                      subtitle:
+                          'Rs. ${viewModel.bookData?.ebook?.sellingPrice}',
+                      onPressed: () {},
+                    ),
+                    BaseListTile(
+                      title: 'Description',
+                      subtitle: viewModel.bookData?.backCoverText ?? '',
+                    ),
+                    const BaseDivider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: viewModel.bookData?.authors?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              final auther =
+                                  viewModel.bookData?.authors?[index];
+                              return Row(
+                                children: [
+                                  Text(
+                                    auther?.name ?? '',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  horizontalSpaceSmall,
+                                  Text(
+                                    auther?.photo ?? '',
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    const BaseDivider(),
+                  ],
+                ),
               ),
-              const BaseDivider(),
-            ],
-          ),
-        ),
-      ),
+            ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             BaseButton(
-                width: 150,
-                text: "Buy Now",
-                onPressed: () {},
-                color: Colors.blue),
+              width: 150,
+              text: "Buy Now",
+              onPressed: () {},
+              color: Colors.blue,
+            ),
             horizontalSpaceMedium,
             BaseButton(
-                width: 150,
-                text: "Add to Cart",
-                onPressed: () {
-                  viewModel.NavigationToCart();
-                },
-                color: Colors.blue),
+              width: 150,
+              text: "Add to Cart",
+              onPressed: () {
+                viewModel.navigationToCart();
+              },
+              color: Colors.blue,
+            ),
           ],
         ),
       ),
@@ -159,8 +186,9 @@ class DetailView extends StackedView<DetailViewModel> {
   }
 
   @override
-  DetailViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
-      DetailViewModel();
+  DetailViewModel viewModelBuilder(BuildContext context) => DetailViewModel();
+
+  @override
+  void onViewModelReady(DetailViewModel viewModel) =>
+      viewModel.fetchBookData(slug);
 }

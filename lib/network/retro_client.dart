@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
+import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
 import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_request.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_response.dart';
@@ -20,5 +21,10 @@ abstract class RetroClient {
   Future<RegistrationResponse> signup(
       @Body() RegistrationRequest registrationRequest);
   @POST('api/login/')
-  Future<LoginResponse> login(@Body() LoginRequest loginRequestM);
+  Future<LoginResponse> login(@Body() LoginRequest loginRequest);
+  @GET("book/{slug}")
+  Future<BookModel> getBookData(@Path("slug") String slug);
+  // Future<AddCartRequest> addCart(@Body() AddCartRequest addToCart);
+  @GET("api/logout/")
+  Future<void> logout();
 }

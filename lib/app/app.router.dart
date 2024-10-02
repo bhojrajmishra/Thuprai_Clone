@@ -75,6 +75,10 @@ class StackedRouter extends _i1.RouterBase {
       Routes.bottomnavigationbarView,
       page: _i8.BottomnavigationbarView,
     ),
+    _i1.RouteDef(
+      Routes.cartView,
+      page: _i6.CartView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
@@ -138,7 +142,7 @@ class DetailViewArguments {
 
   final _i9.Key? key;
 
-  final dynamic slug;
+  final String slug;
 
   @override
   String toString() {
@@ -202,7 +206,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
 
   Future<dynamic> navigateToDetailView({
     _i9.Key? key,
-    required dynamic slug,
+    required String slug,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -303,7 +307,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
 
   Future<dynamic> replaceWithDetailView({
     _i9.Key? key,
-    required dynamic slug,
+    required String slug,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,

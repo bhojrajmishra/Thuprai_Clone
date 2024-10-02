@@ -10,6 +10,7 @@ import 'package:thuprai_clone/ui/views/detail/detail_view.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_view.dart';
 import 'package:thuprai_clone/ui/views/registration/registration_view.dart';
 import 'package:thuprai_clone/ui/views/bottomnavigationbar/bottomnavigationbar_view.dart';
+import 'package:thuprai_clone/ui/views/cart/cart_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -21,6 +22,7 @@ import 'package:thuprai_clone/ui/views/bottomnavigationbar/bottomnavigationbar_v
     MaterialRoute(page: CartView),
     MaterialRoute(page: RegistrationView),
     MaterialRoute(page: BottomnavigationbarView),
+    MaterialRoute(page: CartView),
 // @stacked-route
   ],
   dependencies: [

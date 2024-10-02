@@ -14,8 +14,8 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 import 'package:thuprai_clone/network/retro_client.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
+import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
-import 'package:thuprai_clone/ui/views/login/service/login_service.dart';
 
 import '../ui/views/login/repository/login_repository_implementation.dart';
 
@@ -37,5 +37,6 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => RetroClient(Dio()));
   locator.registerLazySingleton(() => HomeRepositoryImplementation());
+  locator.registerLazySingleton(() => BookRepositoryImplementation());
   locator.registerLazySingleton(() => SecureStorageService());
 }
