@@ -3,6 +3,7 @@ import 'package:mockito/mockito.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
+import 'package:thuprai_clone/ui/views/detail/detail_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/startup/startup_viewmodel.dart';
@@ -20,7 +21,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<SecureStorageService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<HomeViewModel>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<StartupViewModel>(onMissingStub: OnMissingStub.returnDefault),
-
+  MockSpec<DetailViewModel>(onMissingStub: OnMissingStub.returnDefault),
   // @stacked-mock-spec
 ])
 void registerServices() {
@@ -32,8 +33,16 @@ void registerServices() {
   getAndRegisterSecureStorageService();
   getAndRegisterHomeViewModel();
   getAndRegisterStartupViewModel();
+  getAndRegisterDetailViewModel();
 
   // @stacked-mock-register
+}
+
+MockDetailViewModel getAndRegisterDetailViewModel() {
+  _removeRegistrationIfExists<DetailViewModel>();
+  final service = MockDetailViewModel();
+  locator.registerSingleton<DetailViewModel>(service);
+  return service;
 }
 
 MockStartupViewModel getAndRegisterStartupViewModel() {

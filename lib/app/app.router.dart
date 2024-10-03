@@ -5,10 +5,10 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i9;
+import 'package:flutter/material.dart' as _i10;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i10;
+import 'package:stacked_services/stacked_services.dart' as _i11;
 import 'package:thuprai_clone/ui/views/bottomnavigationbar/bottomnavigationbar_view.dart'
     as _i8;
 import 'package:thuprai_clone/ui/views/cart/cart_view.dart' as _i6;
@@ -18,6 +18,7 @@ import 'package:thuprai_clone/ui/views/login/login_view.dart' as _i4;
 import 'package:thuprai_clone/ui/views/registration/registration_view.dart'
     as _i7;
 import 'package:thuprai_clone/ui/views/startup/startup_view.dart' as _i3;
+import 'package:thuprai_clone/ui/views/viewall/viewall_view.dart' as _i9;
 
 class Routes {
   static const homeView = '/home-view';
@@ -34,6 +35,8 @@ class Routes {
 
   static const bottomnavigationbarView = '/bottomnavigationbar-view';
 
+  static const viewallView = '/viewall-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -42,6 +45,7 @@ class Routes {
     cartView,
     registrationView,
     bottomnavigationbarView,
+    viewallView,
   };
 }
 
@@ -79,49 +83,60 @@ class StackedRouter extends _i1.RouterBase {
       Routes.cartView,
       page: _i6.CartView,
     ),
+    _i1.RouteDef(
+      Routes.viewallView,
+      page: _i9.ViewallView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.LoginView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i4.LoginView(),
         settings: data,
       );
     },
     _i5.DetailView: (data) {
       final args = data.getArgs<DetailViewArguments>(nullOk: false);
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => _i5.DetailView(key: args.key, slug: args.slug),
         settings: data,
       );
     },
     _i6.CartView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.CartView(),
         settings: data,
       );
     },
     _i7.RegistrationView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.RegistrationView(),
         settings: data,
       );
     },
     _i8.BottomnavigationbarView: (data) {
-      return _i9.MaterialPageRoute<dynamic>(
+      return _i10.MaterialPageRoute<dynamic>(
         builder: (context) => const _i8.BottomnavigationbarView(),
+        settings: data,
+      );
+    },
+    _i9.ViewallView: (data) {
+      final args = data.getArgs<ViewallViewArguments>(nullOk: false);
+      return _i10.MaterialPageRoute<dynamic>(
+        builder: (context) => _i9.ViewallView(key: args.key, title: args.title),
         settings: data,
       );
     },
@@ -140,7 +155,7 @@ class DetailViewArguments {
     required this.slug,
   });
 
-  final _i9.Key? key;
+  final _i10.Key? key;
 
   final String slug;
 
@@ -161,7 +176,34 @@ class DetailViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i10.NavigationService {
+class ViewallViewArguments {
+  const ViewallViewArguments({
+    this.key,
+    required this.title,
+  });
+
+  final _i10.Key? key;
+
+  final String title;
+
+  @override
+  String toString() {
+    return '{"key": "$key", "title": "$title"}';
+  }
+
+  @override
+  bool operator ==(covariant ViewallViewArguments other) {
+    if (identical(this, other)) return true;
+    return other.key == key && other.title == title;
+  }
+
+  @override
+  int get hashCode {
+    return key.hashCode ^ title.hashCode;
+  }
+}
+
+extension NavigatorStateExtension on _i11.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -205,7 +247,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }
 
   Future<dynamic> navigateToDetailView({
-    _i9.Key? key,
+    _i10.Key? key,
     required String slug,
     int? routerId,
     bool preventDuplicates = true,
@@ -263,6 +305,23 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition: transition);
   }
 
+  Future<dynamic> navigateToViewallView({
+    _i10.Key? key,
+    required String title,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return navigateTo<dynamic>(Routes.viewallView,
+        arguments: ViewallViewArguments(key: key, title: title),
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
   Future<dynamic> replaceWithHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -306,7 +365,7 @@ extension NavigatorStateExtension on _i10.NavigationService {
   }
 
   Future<dynamic> replaceWithDetailView({
-    _i9.Key? key,
+    _i10.Key? key,
     required String slug,
     int? routerId,
     bool preventDuplicates = true,
@@ -358,6 +417,23 @@ extension NavigatorStateExtension on _i10.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.bottomnavigationbarView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithViewallView({
+    _i10.Key? key,
+    required String title,
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  }) async {
+    return replaceWith<dynamic>(Routes.viewallView,
+        arguments: ViewallViewArguments(key: key, title: title),
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

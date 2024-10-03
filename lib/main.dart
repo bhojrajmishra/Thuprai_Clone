@@ -12,7 +12,7 @@ Future<void> main() async {
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
-  runApp(const MainApp());
+  runApp(DevicePreview(builder: (context) => const MainApp()));
 }
 
 class MainApp extends StatelessWidget {

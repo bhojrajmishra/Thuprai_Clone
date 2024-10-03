@@ -89,4 +89,11 @@ class HomeViewModel extends BaseViewModel with Initialisable {
       debugPrint(fetchData?.featured?[index].slug ?? '');
     }
   }
+
+  // void onViewAllTapped(String title) {
+  //   _navigation.navigateTo(Routes.viewallView,
+  //       arguments: ViewAllViewArguments(title: title));
+
+  //   debugPrint('View all tapped for $title');
+  // }
 }

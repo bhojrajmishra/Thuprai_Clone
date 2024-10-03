@@ -32,10 +32,7 @@ void main() {
 
       await registration.requestRegistrationApi();
 
-      expect(
-          // Verify that the user is registered
-          registration.requestRegistrationApi,
-          equals(false)
+      expect(registration.requestRegistrationApi, isA<RegistrationViewModel>()
 
           // The user should not be registered
           );

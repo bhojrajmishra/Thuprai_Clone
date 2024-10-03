@@ -10,14 +10,10 @@ class DioClient {
   DioClient(String baseUrl) {
     dio = Dio(BaseOptions(baseUrl: ApiPath.baseUrl));
     dio.interceptors.add(DioInterceptor());
-    AwesomeDioInterceptor(
+    LogInterceptor(
       // Disabling headers and timeout would minimize the logging output.
       // Optional, defaults to true
-      logRequestTimeout: true,
-      logRequestHeaders: true,
-      logResponseHeaders: true,
-
-      logger: debugPrint,
+      requestHeader: true,
     );
   }
 }
