@@ -22,6 +22,7 @@ dependencies:
   stacked_services: ^1.1.0
   flutter_secure_storage: ^9.2.2
   logger: ^1.4.0
+  awesome_dio_interceptor: ^1.2.0
 
   
 

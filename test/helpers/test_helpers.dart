@@ -2,7 +2,10 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/network/secure_storage.dart';
+import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
+import 'package:thuprai_clone/ui/views/startup/startup_viewmodel.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -14,6 +17,9 @@ import 'test_helpers.mocks.dart';
   MockSpec<SnackbarService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<HomeRepositoryImplementation>(
       onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<SecureStorageService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<HomeViewModel>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<StartupViewModel>(onMissingStub: OnMissingStub.returnDefault),
 
   // @stacked-mock-spec
 ])
@@ -23,8 +29,32 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterSnackbarService();
   getAndRegisterHomeRepositoryImplementation();
+  getAndRegisterSecureStorageService();
+  getAndRegisterHomeViewModel();
+  getAndRegisterStartupViewModel();
 
   // @stacked-mock-register
+}
+
+MockStartupViewModel getAndRegisterStartupViewModel() {
+  _removeRegistrationIfExists<StartupViewModel>();
+  final service = MockStartupViewModel();
+  locator.registerSingleton<StartupViewModel>(service);
+  return service;
+}
+
+MockHomeViewModel getAndRegisterHomeViewModel() {
+  _removeRegistrationIfExists<HomeViewModel>();
+  final service = MockHomeViewModel();
+  locator.registerSingleton<HomeViewModel>(service);
+  return service;
+}
+
+MockSecureStorageService getAndRegisterSecureStorageService() {
+  _removeRegistrationIfExists<SecureStorageService>();
+  final service = MockSecureStorageService();
+  locator.registerSingleton<SecureStorageService>(service);
+  return service;
 }
 
 MockSnackbarService getAndRegisterSnackbarService() {

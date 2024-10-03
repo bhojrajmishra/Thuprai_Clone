@@ -22,6 +22,7 @@ class StartupViewModel extends BaseViewModel {
     } else {
       // No token, navigate to login
       _navigationService.replaceWith(Routes.loginView);
+      debugPrint('Token does not exist');
     }
   }
 }

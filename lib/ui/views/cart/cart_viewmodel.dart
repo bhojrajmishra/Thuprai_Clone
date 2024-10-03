@@ -1,55 +1,69 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
+import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
+import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
+import 'package:thuprai_clone/ui/views/cart/repository/cart_repository.dart';
+import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 
 class CartViewModel extends BaseViewModel {
   final NavigationService _navigation = locator<NavigationService>();
 
-  CartViewModel();
+  final CartRepositoryImplementation _cartRepositoryImplementation =
+      locator<CartRepositoryImplementation>();
 
-  // Mock data for the button listview items
+  CartModel? _cartModel;
+  CartModel? get cartModel => _cartModel;
 
-  final List<Items> items = [];
-
-  List<ItemDescription> itemDescriptions = [];
-
-  void onItemSelected(String slug) {
-    _navigation.navigateTo(
-      Routes.detailView,
-      arguments: DetailViewArguments(slug: slug),
-    );
+  CartViewModel() {
+    fetchCart();
   }
 
-  void incrementItem(int index) {
-    if (itemDescriptions[index].price >= 0) {
-      itemDescriptions[index].price += 1;
+  Future<void> fetchCart() async {
+    setBusy(true);
+    try {
+      _cartModel = await _cartRepositoryImplementation.getCart();
+      debugPrint('Fetched cart: ${_cartModel?.toJson()}');
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching cart: $e');
+    } finally {
+      setBusy(false);
     }
-    notifyListeners();
   }
 
-  void decrementItem(int index) {
-    if (itemDescriptions[index].price > 0) {
-      itemDescriptions[index].price -= 1;
+  Future<void> removeCartItem(String cartId, String linesId) async {
+    setBusy(true);
+    try {
+      await _cartRepositoryImplementation.deleteCartItem(cartId, linesId);
+      debugPrint('Removed item from cart');
+      debugPrint('response of cart response: ${_cartModel?.toJson()}');
+      await fetchCart(); // Refresh cart after removing item
+    } catch (e) {
+      // Handle error
+    } finally {
+      setBusy(false);
     }
-
-    notifyListeners();
   }
 
-  void updateCount(int index, int count) {
-    itemDescriptions[index].price = count.toDouble();
-    notifyListeners();
+  Future<void> updateCartItem(
+      String cartId, String linesId, CartRequestModel updateCart) async {
+    setBusy(true);
+    try {
+      await _cartRepositoryImplementation.updateCartItem(
+          cartId, linesId, updateCart);
+      await fetchCart(); // Refresh cart after updating item
+    } catch (e) {
+      // Handle error
+    } finally {
+      setBusy(false);
+    }
   }
 
   double totalPrice() {
-    double total = 0;
-    for (var item in itemDescriptions) {
-      total += item.price;
-    }
-    return total;
+    return double.tryParse(_cartModel?.totalInclTax ?? '0') ?? 0;
   }
 
   double discountAmount() {
@@ -60,38 +74,10 @@ class CartViewModel extends BaseViewModel {
     return totalPrice() - discountAmount();
   }
 
-  void onAddItem() {
-    items.add(Items(
-        imageUrl:
-            'https://media.thuprai.com/__sized__/front_covers/music-myth-and-melody-f-thumbnail-100x145-70.jpg',
-        title: 'title1'));
-    notifyListeners();
+  void onItemSelected(String slug) {
+    _navigation.navigateTo(
+      Routes.detailView,
+      arguments: DetailViewArguments(slug: slug),
+    );
   }
-
-  void onRemoveItem(int index) {
-    items.removeAt(index);
-    notifyListeners();
-  }
-}
-
-class ItemDescription {
-  final String name;
-  double price;
-
-  ItemDescription({
-    required this.name,
-    required this.price,
-  });
-}
-
-class Items {
-  final String imageUrl;
-  final String title;
-  final int? quantity;
-
-  Items({
-    required this.imageUrl,
-    required this.title,
-    this.quantity = 1,
-  });
 }

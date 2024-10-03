@@ -21,8 +21,11 @@ class BaseOutlineButton extends StatelessWidget {
           ),
         ),
         child: ListTile(
-          title: Text(title),
-          subtitle: Text(subtitle),
+          title: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
+          subtitle: Text(subtitle, textAlign: TextAlign.center),
         ));
   }
 }

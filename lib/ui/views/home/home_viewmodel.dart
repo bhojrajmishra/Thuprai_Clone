@@ -13,6 +13,11 @@ class HomeViewModel extends BaseViewModel with Initialisable {
 
   HomeResponseModel? fetchData;
 
+  @override
+  Future<void> initialise() async {
+    await getBooks();
+  }
+
   List<String> featuredImageUrls = [];
   List<String> featuredTitles = [];
   List<String> ebookCoverUrls = [];
@@ -23,11 +28,6 @@ class HomeViewModel extends BaseViewModel with Initialisable {
   List<String> newReleaseTitles = [];
   List<String> bestSellerCoverUrls = [];
   List<String> bestSellerTitles = [];
-
-  @override
-  Future<void> initialise() async {
-    await getBooks();
-  }
 
   Future<void> getBooks() async {
     try {

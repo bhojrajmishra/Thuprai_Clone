@@ -17,7 +17,7 @@ class LoginViewModel extends BaseViewModel {
       locator<LoginRepositoryImpl>();
   final SnackbarService _snackbarService = locator<SnackbarService>();
   final SecureStorageService _secureStorage = locator<SecureStorageService>();
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  late final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool isPasswordVisible = false;
 
@@ -47,7 +47,6 @@ class LoginViewModel extends BaseViewModel {
       _snackbarService.showSnackbar(message: 'Please enter valid data');
       return;
     }
-
     setBusy(true);
 
     try {

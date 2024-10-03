@@ -7,5 +7,6 @@ void main() {
   group('CartViewModel Tests -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
+    setUpAll(() => setupLocator());
   });
 }

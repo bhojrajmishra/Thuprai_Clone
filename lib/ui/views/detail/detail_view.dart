@@ -35,12 +35,14 @@ class DetailView extends StackedView<DetailViewModel> {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             onPressed: () {
-              viewModel.navigationToCart(
-                viewModel.bookData?.id ?? 0,
-                viewModel.bookData?.nepaliTitle ?? '',
-                viewModel.bookData?.frontCover ?? '',
-                viewModel.bookData?.paperback?.sellingPrice ?? 0,
-              );
+              // if (viewModel.bookData != null) {
+              //   viewModel.addToCartAndNavigate(
+              //     viewModel.bookData!.id!,
+              //     viewModel.bookData!.nepaliTitle!,
+              //     viewModel.bookData!.frontCover!,
+              //     viewModel.bookData!.paperback?.sellingPrice ?? 0,
+              //   );
+              // }
             },
           ),
         ],
@@ -112,18 +114,35 @@ class DetailView extends StackedView<DetailViewModel> {
                       ),
                     ),
                     verticalSpaceMedium,
-                    BaseOutlineButton(
-                      title: 'Paperback',
-                      subtitle:
-                          'Rs. ${viewModel.bookData?.paperback?.sellingPrice}',
-                      onPressed: () {},
-                    ),
-                    horizontalSpaceMedium,
-                    BaseOutlineButton(
-                      title: 'Ebook',
-                      subtitle:
-                          'Rs. ${viewModel.bookData?.ebook?.sellingPrice}',
-                      onPressed: () {},
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (viewModel.bookData?.paperback != null)
+                          Expanded(
+                            child: BaseOutlineButton(
+                              title: 'Paperback',
+                              subtitle:
+                                  'Rs. ${viewModel.bookData?.paperback?.sellingPrice}',
+                              onPressed: () {
+                                //  viewModel.selectPaperback();
+                              },
+                            ),
+                          ),
+                        if (viewModel.bookData?.paperback != null &&
+                            viewModel.bookData?.ebook != null)
+                          horizontalSpaceMedium,
+                        if (viewModel.bookData?.ebook != null)
+                          Expanded(
+                            child: BaseOutlineButton(
+                              title: 'Ebook',
+                              subtitle:
+                                  'Rs. ${viewModel.bookData?.ebook?.sellingPrice}',
+                              onPressed: () {
+                                // viewModel.selectEbook();
+                              },
+                            ),
+                          ),
+                      ],
                     ),
                     BaseListTile(
                       title: 'Description',
@@ -175,12 +194,14 @@ class DetailView extends StackedView<DetailViewModel> {
               onPressed: () {
                 debugPrint('Buy now');
 
-                viewModel.navigationToCart(
-                  viewModel.bookData?.id ?? 0,
-                  viewModel.bookData?.nepaliTitle ?? '',
-                  viewModel.bookData?.frontCover ?? '',
-                  viewModel.bookData?.paperback?.sellingPrice ?? 0,
-                );
+                // if (viewModel.bookData != null) {
+                //   viewModel.addToCartAndNavigate(
+                //     viewModel.bookData!.id!,
+                //     viewModel.bookData!.nepaliTitle!,
+                //     viewModel.bookData!.frontCover!,
+                //     viewModel.bookData!.paperback?.sellingPrice ?? 0,
+                //   );
+                // }
               },
               color: Colors.blue,
             ),
@@ -189,19 +210,15 @@ class DetailView extends StackedView<DetailViewModel> {
               width: 150,
               text: "Add to Cart",
               onPressed: () {
-                viewModel.navigationToCart(
-                  viewModel.bookData?.id ?? 0,
-                  viewModel.bookData?.nepaliTitle ?? '',
-                  viewModel.bookData?.frontCover ?? '',
-                  viewModel.bookData?.paperback?.sellingPrice ?? 0,
-                );
-                debugPrint('Add to cart');
-                debugPrint('Book id: ${viewModel.bookData?.id}');
-                debugPrint('Book title: ${viewModel.bookData?.nepaliTitle}');
-                debugPrint(
-                    'Book front cover: ${viewModel.bookData?.frontCover}');
-                debugPrint(
-                    'Book price: ${viewModel.bookData?.paperback?.sellingPrice}');
+                if (viewModel.bookData != null) {
+                  viewModel.addCart(
+                    viewModel.bookData!.id!,
+                    viewModel.bookData!.nepaliTitle!,
+                    viewModel.bookData!.frontCover!,
+                    viewModel.bookData!.paperback?.sellingPrice ?? 0,
+                  );
+                  debugPrint('Add to cart button pressed');
+                }
               },
               color: Colors.blue,
             ),

@@ -7,5 +7,6 @@ void main() {
   group('DetailViewModel Tests -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
+    setUpAll(() => setupLocator());
   });
 }
