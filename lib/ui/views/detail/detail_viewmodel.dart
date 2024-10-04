@@ -26,49 +26,46 @@ class DetailViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> addCart(
-      {required BookModel? bookData,
-      required int quantity,
-      required int bookId}) async {
-    if (bookData == null) {
-      debugPrint('Book data is null');
-      return;
-    }
+  // Future<void> addCart(
+  //     {required BookModel? bookData,
+  //     required int quantity,
+  //     required int bookId}) async {
+  //   if (bookData == null) {
+  //     debugPrint('Book data is null');
+  //     return;
+  //   }
 
-    setBusy(true);
-    try {
-      final cartRequest = CartRequestModel(
-        path: "/book/${bookData.slug}",
-        quantity: quantity,
-        url: "http://127.0.0.1:8000/v1/api/products/$bookId",
-      );
-      debugPrint('Cart request: ${cartRequest.toJson()}');
-
-      final cartResponse = await _bookRepository.addCart(cartRequest);
-      debugPrint('Added to cart successfully: ${cartResponse.id}');
-      notifyListeners();
-    } catch (e) {
-      debugPrint('Error adding to cart: $e');
-      setError(e);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  // Future<void> addToCartAndNavigate(
-  //     int id, String nepaliTitle, String frontCover, double price) async {
+  //   setBusy(true);
   //   try {
-  //     final cartRequest = CartRequestModel(
-  //       path: "/book/${bookData?.slug},",
-  //       quantity: 1,
-  //       url: 'http://127.0.0.1:8000/v1/api/products/$id/',
-  //     );
-
-  //     await _bookRepository.addToCart(cartRequest);
-  //     debugPrint('response of cart response: $');
+  //     await _bookRepository.addCart(CartRequestModel(
+  //       path: "/book/${bookData.slug}",
+  //       quantity: quantity,
+  //       url: "http://127.0.0.1:8000/v1/api/products/$bookId",
+  //     ));
+  //     debugPrint('Added to cart successfully: ${bookData.toJson()}');
+  //     notifyListeners();
   //   } catch (e) {
-  //     setError(e);
   //     debugPrint('Error adding to cart: $e');
+  //     setError(e);
+  //   } finally {
+  //     setBusy(false);
   //   }
   // }
+
+  Future<void> addCart(
+      int id, String nepaliTitle, String frontCover, double price) async {
+    try {
+      await _bookRepository.addCart(CartRequestModel(
+        path: "/book/${bookData?.slug},",
+        quantity: 1,
+        url: 'http://127.0.0.1:8000/v1/api/products/$id/',
+      ));
+
+      debugPrint('Added to cart successfully:');
+      notifyListeners();
+    } catch (e) {
+      setError(e);
+      debugPrint('Error adding to cart: $e');
+    }
+  }
 }

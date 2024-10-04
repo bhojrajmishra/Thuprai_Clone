@@ -1160,6 +1160,15 @@ class MockHomeViewModel extends _i1.Mock implements _i10.HomeViewModel {
       );
 
   @override
+  void onViewAllTapped(String? title) => super.noSuchMethod(
+        Invocation.method(
+          #onViewAllTapped,
+          [title],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
   void notifyListeners() => super.noSuchMethod(
         Invocation.method(
           #notifyListeners,
@@ -2029,10 +2038,21 @@ class MockDetailViewModel extends _i1.Mock implements _i12.DetailViewModel {
       ) as _i2.Future<void>);
 
   @override
-  _i2.Future<void> addToCart() => (super.noSuchMethod(
+  _i2.Future<void> addCart(
+    int? id,
+    String? nepaliTitle,
+    String? frontCover,
+    double? price,
+  ) =>
+      (super.noSuchMethod(
         Invocation.method(
-          #addToCart,
-          [],
+          #addCart,
+          [
+            id,
+            nepaliTitle,
+            frontCover,
+            price,
+          ],
         ),
         returnValue: _i2.Future<void>.value(),
         returnValueForMissingStub: _i2.Future<void>.value(),

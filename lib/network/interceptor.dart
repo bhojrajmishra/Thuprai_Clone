@@ -4,6 +4,7 @@ import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/utils/api_path.dart';
 
 class DioInterceptor extends Interceptor {
   final SecureStorageService _secureStorage = locator<SecureStorageService>();
@@ -16,15 +17,10 @@ class DioInterceptor extends Interceptor {
       String? token = await _secureStorage.getData('token');
 
       if (token != null && token.isNotEmpty) {
-        options.headers['Authorization'] = 'Bearer $token';
+        options.headers['Authorization'] = 'Token $token';
+        debugPrint('Token: $token');
       }
-
       // Logging the request details
-      debugPrint('Request Method: ${options.method}');
-      debugPrint('Request URL: ${options.baseUrl}${options.path}');
-      debugPrint('Request Headers: ${options.headers}');
-      debugPrint('Request Query Params: ${options.queryParameters}');
-      debugPrint('Request Body: ${options.data}');
 
       handler.next(options); // continue
     } catch (e) {
@@ -34,8 +30,13 @@ class DioInterceptor extends Interceptor {
   }
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
+    String? token = response.data['token'];
     // Enhanced logging for the response
+    if (token != null) {
+      await _secureStorage.saveData('token', token);
+    }
+    debugPrint('Token: $token');
     debugPrint(
         'Response: [${response.statusCode}] ${response.requestOptions.uri}');
     debugPrint('Response Headers: ${response.headers}');

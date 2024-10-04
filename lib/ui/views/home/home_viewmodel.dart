@@ -99,34 +99,4 @@ class HomeViewModel extends BaseViewModel with Initialisable {
     );
     debugPrint('View all tapped for $title');
   }
-
-  List<String> _getCoverUrlsForTitle(String title) {
-    switch (title) {
-      case "New Releases":
-        return newReleaseCoverUrls;
-      case "Recent E-books":
-        return ebookCoverUrls;
-      case "Recent Audiobooks":
-        return audiobookCoverUrls;
-      case "Best Sellers":
-        return bestSellerCoverUrls;
-      default:
-        return [];
-    }
-  }
-
-  List<String> _getTitlesForTitle(String title) {
-    switch (title) {
-      case "New Releases":
-        return newReleaseTitles;
-      case "Recent E-books":
-        return ebookTitles;
-      case "Recent Audiobooks":
-        return audiobookTitles;
-      case "Best Sellers":
-        return bestSellerTitles;
-      default:
-        return [];
-    }
-  }
 }

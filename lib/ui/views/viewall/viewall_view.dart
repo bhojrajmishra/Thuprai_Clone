@@ -32,12 +32,15 @@ class ViewallView extends StackedView<ViewallViewModel> {
               itemCount: viewModel.coverUrls.length,
               itemBuilder: (context, index) {
                 return GridTile(
-                  child: Column(
-                    children: [
-                      Image.network(viewModel.coverUrls[index], height: 120),
-                      Text(viewModel.titles[index],
-                          textAlign: TextAlign.center),
-                    ],
+                  child: InkWell(
+                    onTap: () => viewModel.onItemSelected(),
+                    child: Column(
+                      children: [
+                        Image.network(viewModel.coverUrls[index], height: 120),
+                        Text(viewModel.titles[index],
+                            textAlign: TextAlign.center),
+                      ],
+                    ),
                   ),
                 );
               },

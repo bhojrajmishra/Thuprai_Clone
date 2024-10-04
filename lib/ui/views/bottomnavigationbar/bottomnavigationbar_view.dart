@@ -30,28 +30,29 @@ class BottomnavigationbarView
           ),
           IconButton(
             icon:
-                Badge(label: Text('0'), child: const Icon(Icons.shopping_cart)),
+                const Badge(label: Text('0'), child: Icon(Icons.shopping_cart)),
             onPressed: () {
               viewModel.navigateToCart();
             },
           ),
         ],
       ),
-      drawer: BaseDrawer(
+      drawer: const BaseDrawer(
         header: 'thuprai',
         title: 'Library',
-        trailing: const Icon(Icons.book),
+        trailing: Icon(Icons.book),
       ),
-      body: PageView(
+      body: IndexedStack(
+        index: viewModel.currentIndex,
         children: const [
           HomeView(),
           CartView(),
-          LoginView(),
           LoginView(),
         ],
       ),
       bottomNavigationBar: BaseBottomNavigationBar(
         currentIndex: viewModel.currentIndex,
+        onTap: viewModel.setIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

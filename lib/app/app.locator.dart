@@ -17,7 +17,6 @@ import 'package:thuprai_clone/network/secure_storage.dart';
 import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
-import 'package:thuprai_clone/ui/views/registration/registration_viewmodel.dart';
 
 import '../ui/views/login/repository/login_repository_implementation.dart';
 
@@ -42,5 +41,4 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => CartRepositoryImplementation());
   locator.registerLazySingleton(() => BookRepositoryImplementation());
-  locator.registerLazySingleton(() => RegistrationViewModel());
 }

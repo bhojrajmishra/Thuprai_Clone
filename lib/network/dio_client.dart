@@ -13,19 +13,19 @@ class DioClient {
     ));
 
     // Add the custom DioInterceptor first
-    dio.interceptors.add(DioInterceptor());
+    dio.interceptors.addAll(
+      [
+        DioInterceptor(),
+        LogInterceptor(
+          requestBody: true,
+          responseBody: true,
+          requestHeader: true,
+          responseHeader: true,
+          error: true,
+        ),
+      ],
+    );
 
     // Add Dio's LogInterceptor to log all types of requests, responses, errors
-    dio.interceptors.add(LogInterceptor(
-      request: true,
-      requestHeader: true,
-      requestBody: true,
-      responseHeader: true,
-      responseBody: true,
-      error: true,
-      logPrint: (object) {
-        print(object); // You can use your custom logger here if you have one.
-      },
-    ));
   }
 }

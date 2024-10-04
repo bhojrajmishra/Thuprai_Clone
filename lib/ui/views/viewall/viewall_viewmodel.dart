@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
 
 class ViewallViewModel extends BaseViewModel with Initialisable {
   final HomeViewModel _homeViewModel = HomeViewModel();
+  final NavigationService _navigationService = NavigationService();
   @override
   Future<void> initialise() async {
     await getBooks();
@@ -27,6 +30,7 @@ class ViewallViewModel extends BaseViewModel with Initialisable {
       coverUrls.addAll(_homeViewModel.audiobookCoverUrls);
       coverUrls.addAll(_homeViewModel.newReleaseCoverUrls);
       coverUrls.addAll(_homeViewModel.bestSellerCoverUrls);
+      coverUrls.addAll(_homeViewModel.featuredImageUrls);
       notifyListeners();
     } catch (e) {
       setError(e);
@@ -45,5 +49,9 @@ class ViewallViewModel extends BaseViewModel with Initialisable {
 
   void onModelReady() {
     initialise();
+  }
+
+  void onItemSelected() {
+    _navigationService.navigateTo(Routes.detailView);
   }
 }
