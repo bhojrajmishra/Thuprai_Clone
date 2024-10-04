@@ -29,9 +29,8 @@ class BottomnavigationbarView
             onPressed: () {},
           ),
           IconButton(
-            icon: Badge(
-                label: Text(viewModel.cartItemCount.toString()),
-                child: const Icon(Icons.shopping_cart)),
+            icon:
+                Badge(label: Text('0'), child: const Icon(Icons.shopping_cart)),
             onPressed: () {
               viewModel.navigateToCart();
             },

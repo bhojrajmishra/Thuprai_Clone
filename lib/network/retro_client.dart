@@ -3,17 +3,17 @@ import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
+import 'package:thuprai_clone/ui/views/cart/model/cart_response_model.dart';
 import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
 import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_request.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_response.dart';
 import 'package:thuprai_clone/ui/views/registration/model/registration_request.dart';
 import 'package:thuprai_clone/ui/views/registration/model/registration_response.dart';
-import 'package:thuprai_clone/utils/api_path.dart';
 
 part 'retro_client.g.dart';
 
-@RestApi(baseUrl: ApiPath.baseUrl)
+@RestApi(baseUrl: "https://tbe.thuprai.com/v1/")
 abstract class RetroClient {
   factory RetroClient(Dio dio, {String? baseUrl}) = _RetroClient;
 
@@ -31,7 +31,7 @@ abstract class RetroClient {
 
   //add cart accordint to product
   @POST('api/basket/add-product/')
-  Future<CartRequestModel> addCart(@Body() CartRequestModel cartRequest);
+  Future<CartResponseModel> addCart(@Body() CartRequestModel cartRequest);
 //get cart list
   @GET('api/basket/')
   Future<CartModel> getCart();

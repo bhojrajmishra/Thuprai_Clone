@@ -186,20 +186,20 @@ class _RetroClient implements RetroClient {
   }
 
   @override
-  Future<CartRequestModel> addCart(CartRequestModel cartRequest) async {
+  Future<CartResponseModel> addCart(CartRequestModel cartRequest) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(cartRequest.toJson());
-    final _options = _setStreamType<CartRequestModel>(Options(
+    final _options = _setStreamType<CartResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'api/basket/add-product/',
+          'https://tbe.thuprai.com/v1/api/basket/add-product/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -209,9 +209,9 @@ class _RetroClient implements RetroClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartRequestModel _value;
+    late CartResponseModel _value;
     try {
-      _value = CartRequestModel.fromJson(_result.data!);
+      _value = CartResponseModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

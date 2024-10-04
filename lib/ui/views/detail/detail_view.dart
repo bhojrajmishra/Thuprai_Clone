@@ -142,6 +142,13 @@ class DetailView extends StackedView<DetailViewModel> {
                               },
                             ),
                           ),
+                        if (viewModel.bookData?.audiobook != null)
+                          Expanded(
+                              child: BaseOutlineButton(
+                                  title: 'AudioBook',
+                                  subtitle:
+                                      'Rs. ${viewModel.bookData?.audiobook}',
+                                  onPressed: () {}))
                       ],
                     ),
                     BaseListTile(
@@ -212,10 +219,9 @@ class DetailView extends StackedView<DetailViewModel> {
               onPressed: () {
                 if (viewModel.bookData != null) {
                   viewModel.addCart(
-                    viewModel.bookData!.id!,
-                    viewModel.bookData!.nepaliTitle!,
-                    viewModel.bookData!.frontCover!,
-                    viewModel.bookData!.paperback?.sellingPrice ?? 0,
+                    bookId: viewModel.bookData!.id!,
+                    bookData: viewModel.bookData,
+                    quantity: 1,
                   );
                   debugPrint('Add to cart button pressed');
                 }

@@ -5,7 +5,6 @@ import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
-import 'package:thuprai_clone/ui/views/cart/repository/cart_repository.dart';
 import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 
 class CartViewModel extends BaseViewModel {

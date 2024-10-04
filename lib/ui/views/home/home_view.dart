@@ -65,6 +65,8 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.fetchData?.newReleases?[index].slug ?? '',
                           ),
                         ),
+                        onViewAll: () =>
+                            viewModel.onViewAllTapped("New Releases"),
                       ),
                       _buildSection(
                         title: "Recent E-books",
@@ -75,6 +77,8 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.fetchData?.ebooks?[index].slug ?? '',
                           ),
                         ),
+                        onViewAll: () =>
+                            viewModel.onViewAllTapped("Recent E-books"),
                       ),
                       _buildSection(
                         title: "Recent Audiobooks",
@@ -85,6 +89,8 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.fetchData?.audiobooks?[index].slug ?? '',
                           ),
                         ),
+                        onViewAll: () =>
+                            viewModel.onViewAllTapped("Recent Audiobooks"),
                       ),
                       _buildSection(
                         title: "Best Sellers",
@@ -97,6 +103,8 @@ class HomeView extends StackedView<HomeViewModel> {
                                 '',
                           ),
                         ),
+                        onViewAll: () =>
+                            viewModel.onViewAllTapped("Best Sellers"),
                       ),
                     ],
                   ),
@@ -106,7 +114,11 @@ class HomeView extends StackedView<HomeViewModel> {
     );
   }
 
-  Widget _buildSection({required String title, required Widget listView}) {
+  Widget _buildSection({
+    required String title,
+    required Widget listView,
+    required VoidCallback onViewAll,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,7 +131,7 @@ class HomeView extends StackedView<HomeViewModel> {
             const Spacer(),
             BaseTextButton(
               text: 'View All',
-              onPressed: () => debugPrint('View All clicked for $title'),
+              onPressed: onViewAll,
             ),
           ],
         ),

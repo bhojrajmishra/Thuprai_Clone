@@ -12,44 +12,56 @@ class DioInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    String? token = await _secureStorage.getData('token');
+    try {
+      String? token = await _secureStorage.getData('token');
 
-    if (token != null && token.isNotEmpty) {
-      // Token exists, add it to the request headers
-      options.headers['Authorization'] = 'Bearer $token';
-      debugPrint('Request: ${options.method} ${options.path}');
-      debugPrint('Headers: ${options.headers}');
-      debugPrint('Query Params: ${options.queryParameters}');
-      handler.next(options); // Continue with the request
-    } else {
-      // No token, redirect to login
-      debugPrint('No token found. Redirecting to login.');
-      _navigationService.replaceWith(Routes.loginView);
-      handler.reject(
-        DioException(
-          requestOptions: options,
-          error: 'No authentication token found',
-          type: DioExceptionType.cancel,
-        ),
-        true,
-      );
+      if (token != null && token.isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
+
+      // Logging the request details
+      debugPrint('Request Method: ${options.method}');
+      debugPrint('Request URL: ${options.baseUrl}${options.path}');
+      debugPrint('Request Headers: ${options.headers}');
+      debugPrint('Request Query Params: ${options.queryParameters}');
+      debugPrint('Request Body: ${options.data}');
+
+      handler.next(options); // continue
+    } catch (e) {
+      debugPrint('Error during request: $e');
+      handler.reject(DioException(requestOptions: options, error: e));
     }
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    debugPrint('Response: ${response.statusCode} ${response.data}');
-    handler.next(response); // Continue with the response
+    // Enhanced logging for the response
+    debugPrint(
+        'Response: [${response.statusCode}] ${response.requestOptions.uri}');
+    debugPrint('Response Headers: ${response.headers}');
+    if (response.data != null) {
+      debugPrint('Response Body: ${response.data}');
+    }
+
+    handler.next(response); // continue
   }
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    debugPrint('Error: ${err.message}');
-    if (err.response?.statusCode == 401) {
-      // Unauthorized error, token might be expired
-      _secureStorage.deleteData('token'); // Clear the invalid token
-      _navigationService.replaceWith(Routes.loginView);
+    // Logging enhanced for error
+    debugPrint('Error: ${err.response?.statusCode ?? 'Unknown status'}');
+    debugPrint('Error Message: ${err.message}');
+    if (err.response?.statusCode != null) {
+      debugPrint('Error Response Data: ${err.response?.data}');
     }
-    handler.next(err); // Continue with the error
+
+    // Handling 401 status codes by logging out the user
+    if (err.response?.statusCode == 401) {
+      _secureStorage.deleteData('token');
+      _navigationService.replaceWith(Routes.loginView);
+      debugPrint('User is unauthorized, redirecting to login.');
+    }
+
+    handler.next(err); // continue the error
   }
 }
