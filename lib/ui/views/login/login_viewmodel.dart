@@ -60,7 +60,8 @@ class LoginViewModel extends BaseViewModel {
 
       if (response != null && response.token.isNotEmpty) {
         await _secureStorage.saveData('token', response.token);
-        navigateToHome();
+        await saveUserDetails();
+        debugPrint('SaveUserDatail successfully:  ${response.token}');
       } else {
         _snackbarService.showSnackbar(
             message: 'Login failed: Invalid response');
@@ -73,6 +74,12 @@ class LoginViewModel extends BaseViewModel {
       debugPrint('Login request completed');
       _snackbarService.showSnackbar(message: 'Login request completed');
     }
+  }
+
+  Future<void> saveUserDetails() async {
+    await _secureStorage.saveData('email', emailController.text);
+    await _secureStorage.saveData('password', passwordController.text);
+    await _secureStorage.saveData('isLoggedIn', 'true');
   }
 
   @override

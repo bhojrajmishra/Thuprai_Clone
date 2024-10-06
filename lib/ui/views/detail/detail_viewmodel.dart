@@ -63,7 +63,6 @@ class DetailViewModel extends BaseViewModel {
       );
       debugPrint('Cart request: ${cartRequest.toJson()}');
       await _bookRepository.addCart(cartRequest);
-
       notifyListeners();
     } catch (e) {
       debugPrint('Error adding to cart: $e');
