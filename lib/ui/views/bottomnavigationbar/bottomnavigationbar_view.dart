@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_badge.dart';
 import 'package:thuprai_clone/base/widgets/base_bottom_navigation_bar.dart';
+import 'package:thuprai_clone/ui/views/profile/profile_view.dart';
 import 'bottomnavigationbar_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/home/home_view.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_view.dart';
@@ -48,6 +49,7 @@ class BottomnavigationbarView
           HomeView(),
           CartView(),
           LoginView(),
+          ProfileView(),
         ],
       ),
       bottomNavigationBar: BaseBottomNavigationBar(

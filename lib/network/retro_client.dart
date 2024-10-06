@@ -15,16 +15,20 @@ part 'retro_client.g.dart';
 @RestApi(baseUrl: "https://tbe.thuprai.com/v1/")
 abstract class RetroClient {
   factory RetroClient(Dio dio, {String? baseUrl}) = _RetroClient;
-
+//get home page data
   @GET('index/')
   Future<HomeResponseModel?> getBooks();
+//registration
   @POST('api/signup/')
   Future<RegistrationResponse> signup(
       @Body() RegistrationRequest registrationRequest);
+//login
   @POST('api/login/')
   Future<LoginResponse> login(@Body() LoginRequest loginRequest);
+//get book data
   @GET("book/{slug}")
   Future<BookModel> getBookData(@Path("slug") String slug);
+//logout
   @GET("api/logout/")
   Future<void> logout();
   //add cart accordint to product

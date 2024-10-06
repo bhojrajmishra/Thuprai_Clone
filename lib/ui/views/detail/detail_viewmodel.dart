@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
+import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 
 import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
 import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';
@@ -42,7 +43,6 @@ class DetailViewModel extends BaseViewModel {
   //       quantity: quantity,
   //       url: "http://127.0.0.1:8000/v1/api/products/$bookId",
   //     ));
-  //     debugPrint('Added to cart successfully: ${bookData.toJson()}');
   //     notifyListeners();
   //   } catch (e) {
   //     debugPrint('Error adding to cart: $e');
@@ -54,18 +54,21 @@ class DetailViewModel extends BaseViewModel {
 
   Future<void> addCart(
       int id, String nepaliTitle, String frontCover, double price) async {
+    setBusy(true);
     try {
-      await _bookRepository.addCart(CartRequestModel(
-        path: "/book/${bookData?.slug},",
+      final cartRequest = CartRequestModel(
+        path: "/book/$id",
         quantity: 1,
-        url: 'http://127.0.0.1:8000/v1/api/products/$id/',
-      ));
+        url: "http://127.0.0.1:8000/v1/api/products/$id",
+      );
+      debugPrint('Cart request: ${cartRequest.toJson()}');
+      await _bookRepository.addCart(cartRequest);
 
-      debugPrint('Added to cart successfully:');
       notifyListeners();
     } catch (e) {
-      setError(e);
       debugPrint('Error adding to cart: $e');
+    } finally {
+      setBusy(false);
     }
   }
 }

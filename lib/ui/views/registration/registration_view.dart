@@ -53,7 +53,7 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                   height: 100,
                 ),
                 BaseTextField(
-                  controller: viewModel.emailController,
+                  controller: viewModel.fullNameController,
                   labelText: "Full Name",
                   obscureText: false,
                   validator: (value) => Validator.emailValidator(value),
@@ -83,7 +83,9 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                 const SizedBox(height: 23),
                 BaseButton(
                   text: 'Sign Up',
-                  onPressed: () {},
+                  onPressed: () {
+                    viewModel.requestRegisterApi();
+                  },
                   color: const Color.fromARGB(255, 45, 88, 231),
                   width: double.infinity,
                 ),

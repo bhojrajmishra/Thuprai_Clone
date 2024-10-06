@@ -6,6 +6,7 @@ import 'package:thuprai_clone/base/widgets/base_carousel.dart';
 import 'package:thuprai_clone/base/widgets/base_list_view_builder.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
+import 'package:thuprai_clone/theme/custom_theme.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -21,7 +22,9 @@ class HomeView extends StackedView<HomeViewModel> {
       body: RefreshIndicator(
         onRefresh: viewModel.getBooks,
         child: viewModel.isBusy
-            ? const Center(child: CircularProgressIndicator())
+            ? Center(
+                child: CircularProgressIndicator(
+                    color: CustomTheme.primary(context)))
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -50,15 +53,17 @@ class HomeView extends StackedView<HomeViewModel> {
                                 viewModel.fetchData?.featured?[index].slug ??
                                     '',
                               ),
-                              color: const Color.fromARGB(154, 68, 171, 255),
+                              color: CustomTheme.primary(context),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(width: 50.w),
                       _buildSection(
+                        context: context,
                         title: "New Releases",
                         listView: _buildBaseListView(
+                          context: context,
                           titles: viewModel.newReleaseTitles,
                           coverUrls: viewModel.newReleaseCoverUrls,
                           onTap: (index) => viewModel.onItemSelected(
@@ -69,8 +74,10 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.onViewAllTapped("New Releases"),
                       ),
                       _buildSection(
+                        context: context,
                         title: "Recent E-books",
                         listView: _buildBaseListView(
+                          context: context,
                           titles: viewModel.ebookTitles,
                           coverUrls: viewModel.ebookCoverUrls,
                           onTap: (index) => viewModel.onItemSelected(
@@ -81,8 +88,10 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.onViewAllTapped("Recent E-books"),
                       ),
                       _buildSection(
+                        context: context,
                         title: "Recent Audiobooks",
                         listView: _buildBaseListView(
+                          context: context,
                           titles: viewModel.audiobookTitles,
                           coverUrls: viewModel.audiobookCoverUrls,
                           onTap: (index) => viewModel.onItemSelected(
@@ -93,8 +102,10 @@ class HomeView extends StackedView<HomeViewModel> {
                             viewModel.onViewAllTapped("Recent Audiobooks"),
                       ),
                       _buildSection(
+                        context: context,
                         title: "Best Sellers",
                         listView: _buildBaseListView(
+                          context: context,
                           titles: viewModel.bestSellerTitles,
                           coverUrls: viewModel.bestSellerCoverUrls,
                           onTap: (index) => viewModel.onItemSelected(
@@ -115,6 +126,7 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   Widget _buildSection({
+    required BuildContext context,
     required String title,
     required Widget listView,
     required VoidCallback onViewAll,
@@ -126,13 +138,17 @@ class HomeView extends StackedView<HomeViewModel> {
           children: [
             Text(
               title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: CustomTheme.displayLarge(context)?.copyWith(fontSize: 18),
             ),
             const Spacer(),
             BaseTextButton(
-              text: 'View All',
-              onPressed: onViewAll,
-            ),
+                text: 'View All',
+                onPressed: onViewAll,
+                textStyle: TextStyle(
+                  color: CustomTheme.primary(context),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                )),
           ],
         ),
         const SizedBox(height: 10),
@@ -143,15 +159,20 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   Widget _buildBaseListView({
+    required BuildContext context,
     required List<String> titles,
     required List<String> coverUrls,
     required Function(int) onTap,
   }) {
     return BaseListView(
-      title: titles,
+      titles: titles,
       onTap: onTap,
-      imageUrl: coverUrls,
+      imageUrls: coverUrls,
       profiles: coverUrls,
+      titleStyle: CustomTheme.bodyLarge(context)?.copyWith(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+      ),
     );
   }
 

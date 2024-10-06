@@ -3,6 +3,9 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
+import 'package:thuprai_clone/ui/views/registration/model/registration_request.dart';
+import 'package:thuprai_clone/ui/views/registration/model/registration_response.dart';
+import 'package:thuprai_clone/ui/views/registration/repository/registration_repogitory_implementation.dart';
 
 class RegistrationViewModel extends BaseViewModel {
   // Text controllers for email and password input fields
@@ -16,6 +19,9 @@ class RegistrationViewModel extends BaseViewModel {
   //     locator<LoginRepositoryImpl>();
   final SnackbarService _snackbarService = locator<SnackbarService>();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final RegistrationRepogitoryImplementation
+      _registrationRepogitoryImplementation =
+      locator<RegistrationRepogitoryImplementation>();
 
   // Password visibility state
   bool isPasswordVisible = false;
@@ -45,7 +51,7 @@ class RegistrationViewModel extends BaseViewModel {
 
   // Method to handle registration  logic and API request
 
-  Future<void> requestRegistrationApi() async {
+  Future<void> requestRegisterApi() async {
     // Validate the form before proceeding
     if (!formKey.currentState!.validate()) {
       _snackbarService.showSnackbar(message: 'Please enter valid data');
@@ -56,26 +62,28 @@ class RegistrationViewModel extends BaseViewModel {
 
     try {
       // Create login request object from input values
-      // LoginRequest loginRequest = LoginRequest(
-      //   username: emailController.text,
-      //   password: passwordController.text,
-      // );
+      RegistrationRequest registrationRequest = RegistrationRequest(
+        fullname: fullNameController.text,
+        email: passwordController.text,
+        password: passwordController.text,
+      );
 
       // Call the login repository to make the API request
-      // await _loginRepositoryImpl.login(loginRequest);
-
-      // Navigate to the home screen after successful login
-      navigateToHome();
+      RegistrationResponse? response =
+          await _registrationRepogitoryImplementation
+              .requestRegisterApi(registrationRequest);
+      debugPrint('response: $response');
     } catch (e) {
       // Show error message if login fails
-      _snackbarService.showSnackbar(message: 'Login failed. Please try again');
+      _snackbarService.showSnackbar(
+          message: 'Registration failed. Please try again');
     }
-
     setBusy(false);
   }
 
   @override
   void dispose() {
+    fullNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();

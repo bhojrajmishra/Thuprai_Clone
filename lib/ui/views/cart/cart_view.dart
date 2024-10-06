@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:thuprai_clone/base/widgets/base_button.dart';
-import 'package:thuprai_clone/base/widgets/base_error_message.dart';
+import 'package:thuprai_clone/theme/custom_theme.dart';
+import 'package:thuprai_clone/ui/common/app_colors.dart';
+import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
+import 'package:thuprai_clone/base/widgets/base_button.dart';
+import 'package:thuprai_clone/base/widgets/base_error_message.dart';
 
 class CartView extends StackedView<CartViewModel> {
   const CartView({Key? key}) : super(key: key);
@@ -18,15 +21,21 @@ class CartView extends StackedView<CartViewModel> {
       body: viewModel.isBusy
           ? const Center(child: CircularProgressIndicator())
           : viewModel.cartModel == null || viewModel.cartModel!.lines!.isEmpty
-              ? const Center(
-                  child: BaseErrorMessage(message: 'No items in cart'))
+              ? Center(
+                  child: BaseErrorMessage(
+                    message: 'No items in cart',
+                    // textStyle: CustomTheme.bodyLarge(context),
+                  ),
+                )
               : Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: ListView.separated(
                         itemCount: viewModel.cartModel!.lines!.length,
-                        separatorBuilder: (context, index) => const Divider(),
+                        separatorBuilder: (context, index) => Divider(
+                          color: CustomTheme.secondary(context),
+                        ),
                         itemBuilder: (context, index) {
                           final item = viewModel.cartModel!.lines![index];
                           return ListTile(
@@ -35,8 +44,8 @@ class CartView extends StackedView<CartViewModel> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.remove,
-                                      color: Colors.red),
+                                  icon: Icon(Icons.remove,
+                                      color: CustomTheme.primary(context)),
                                   onPressed: () {
                                     viewModel.updateCartItem(
                                       viewModel.cartModel!.id.toString(),
@@ -48,10 +57,11 @@ class CartView extends StackedView<CartViewModel> {
                                     );
                                   },
                                 ),
-                                Text(item.quantity.toString()),
+                                Text(item.quantity.toString(),
+                                    style: CustomTheme.bodyLarge(context)),
                                 IconButton(
-                                  icon: const Icon(Icons.add,
-                                      color: Colors.green),
+                                  icon: Icon(Icons.add,
+                                      color: CustomTheme.primary(context)),
                                   onPressed: () {
                                     viewModel.updateCartItem(
                                       viewModel.cartModel!.id.toString(),
@@ -64,8 +74,8 @@ class CartView extends StackedView<CartViewModel> {
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.delete,
-                                      color: Colors.red),
+                                  icon: Icon(Icons.delete,
+                                      color: CustomTheme.primary(context)),
                                   onPressed: () {
                                     viewModel.removeCartItem(
                                       viewModel.cartModel!.id.toString(),
@@ -75,8 +85,10 @@ class CartView extends StackedView<CartViewModel> {
                                 )
                               ],
                             ),
-                            title: Text(item.productTitle ?? ''),
-                            subtitle: Text(item.priceInclTax ?? ''),
+                            title: Text(item.productTitle ?? '',
+                                style: CustomTheme.bodyLarge(context)),
+                            subtitle: Text(item.priceInclTax ?? '',
+                                style: CustomTheme.labelMedium(context)),
                           );
                         },
                       ),
@@ -84,7 +96,7 @@ class CartView extends StackedView<CartViewModel> {
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
-                        color: const Color.fromARGB(49, 33, 149, 243),
+                        color: CustomTheme.featuredSectionColor(context),
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(16),
@@ -92,20 +104,26 @@ class CartView extends StackedView<CartViewModel> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                                'Subtotal: ${viewModel.totalPrice().toStringAsFixed(2)}'),
-                            const SizedBox(height: 8),
+                              'Subtotal: ${viewModel.totalPrice().toStringAsFixed(2)}',
+                              style: CustomTheme.bodyLarge(context),
+                            ),
+                            verticalSpaceSmall,
                             Text(
-                                'Discount: ${viewModel.discountAmount().toStringAsFixed(2)}'),
+                              'Discount: ${viewModel.discountAmount().toStringAsFixed(2)}',
+                              style: CustomTheme.bodyLarge(context),
+                            ),
                             const Divider(height: 24),
                             Text(
-                                'Total: ${viewModel.totalAmount().toStringAsFixed(2)}'),
-                            const SizedBox(height: 16),
+                              'Total: ${viewModel.totalAmount().toStringAsFixed(2)}',
+                              style: CustomTheme.displayLarge(context),
+                            ),
+                            verticalSpaceMedium,
                             BaseButton(
                               text: 'Checkout',
                               onPressed: () {
                                 // Implement checkout logic
                               },
-                              color: const Color.fromARGB(255, 33, 100, 243),
+                              color: CustomTheme.primary(context),
                             )
                           ],
                         ),

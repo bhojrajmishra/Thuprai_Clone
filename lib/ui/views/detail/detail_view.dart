@@ -223,10 +223,6 @@ class DetailView extends StackedView<DetailViewModel> {
                     viewModel.bookData!.nepaliTitle!,
                     viewModel.bookData!.frontCover!,
                     viewModel.bookData!.paperback?.sellingPrice ?? 0,
-
-                    // bookId: viewModel.bookData!.id!,
-                    // bookData: viewModel.bookData,
-                    // quantity: 1,
                   );
                   debugPrint('Add to cart button pressed');
                 }
