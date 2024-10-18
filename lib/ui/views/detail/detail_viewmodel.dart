@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
-import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 
 import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
 import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';

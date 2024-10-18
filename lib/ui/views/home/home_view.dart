@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_carousel.dart';
@@ -23,7 +22,7 @@ class HomeView extends StackedView<HomeViewModel> {
                     color: CustomTheme.primary(context)))
             : SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.all(15.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -33,7 +32,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       _buildSection(
                         context: context,
                         title: "New Releases",
-                        items: viewModel.homeData.newReleases,
+                        items: viewModel.homeData?.newReleases,
                         onViewAll: () =>
                             viewModel.onViewAllTapped("New Releases"),
                         onItemTap: viewModel.onItemSelected,
@@ -41,7 +40,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       _buildSection(
                         context: context,
                         title: "Recent E-books",
-                        items: viewModel.homeData.ebooks,
+                        items: viewModel.homeData?.ebooks,
                         onViewAll: () =>
                             viewModel.onViewAllTapped("Recent E-books"),
                         onItemTap: viewModel.onItemSelected,
@@ -49,7 +48,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       _buildSection(
                         context: context,
                         title: "Recent Audiobooks",
-                        items: viewModel.homeData.audiobooks,
+                        items: viewModel.homeData?.audiobooks,
                         onViewAll: () =>
                             viewModel.onViewAllTapped("Recent Audiobooks"),
                         onItemTap: viewModel.onItemSelected,
@@ -57,7 +56,7 @@ class HomeView extends StackedView<HomeViewModel> {
                       _buildSection(
                         context: context,
                         title: "Best Sellers",
-                        items: viewModel.homeData.bestsellingEbooks,
+                        items: viewModel.homeData?.bestsellingEbooks,
                         onViewAll: () =>
                             viewModel.onViewAllTapped("Best Sellers"),
                         onItemTap: viewModel.onItemSelected,
@@ -71,7 +70,7 @@ class HomeView extends StackedView<HomeViewModel> {
   }
 
   Widget _buildCarousel(HomeViewModel viewModel) {
-    final featuredItems = viewModel.homeData.featured;
+    final featuredItems = viewModel.homeData?.featured;
     if (featuredItems?.isNotEmpty ?? false) {
       return Center(
         child: BaseCarousel(
@@ -80,20 +79,20 @@ class HomeView extends StackedView<HomeViewModel> {
         ),
       );
     }
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 
   Widget _buildFeaturedTitles(BuildContext context, HomeViewModel viewModel) {
-    final featuredItems = viewModel.homeData.featured;
+    final featuredItems = viewModel.homeData?.featured;
     if (featuredItems?.isNotEmpty ?? false) {
       return SizedBox(
         height: 80,
         child: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.horizontal,
           itemCount: featuredItems!.length,
           itemBuilder: (context, index) => Padding(
-            padding: EdgeInsets.only(right: 8.0),
+            padding: const EdgeInsets.only(right: 8.0),
             child: BaseButton(
               text: featuredItems[index].title ?? '',
               onPressed: () =>
@@ -104,7 +103,7 @@ class HomeView extends StackedView<HomeViewModel> {
         ),
       );
     }
-    return SizedBox.shrink();
+    return const SizedBox.shrink();
   }
 
   Widget _buildSection({
@@ -123,7 +122,7 @@ class HomeView extends StackedView<HomeViewModel> {
               title,
               style: CustomTheme.displayLarge(context)?.copyWith(fontSize: 18),
             ),
-            Spacer(),
+            const Spacer(),
             BaseTextButton(
               text: 'View All',
               onPressed: onViewAll,
@@ -135,7 +134,7 @@ class HomeView extends StackedView<HomeViewModel> {
             ),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         SizedBox(
           height: 150,
           child: ListView.builder(
@@ -147,7 +146,7 @@ class HomeView extends StackedView<HomeViewModel> {
                 onTap: () => onItemTap(item?.slug ?? ''),
                 child: Container(
                   width: 100,
-                  margin: EdgeInsets.only(right: 10),
+                  margin: const EdgeInsets.only(right: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -155,9 +154,11 @@ class HomeView extends StackedView<HomeViewModel> {
                         child: Image.network(
                           item?.frontCover ?? '',
                           fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.error),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
                         item?.title ?? '',
                         style: CustomTheme.bodyLarge(context)?.copyWith(
@@ -181,4 +182,7 @@ class HomeView extends StackedView<HomeViewModel> {
 
   @override
   HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
+
+  @override
+  void onViewModelReady(HomeViewModel viewModel) => viewModel.init();
 }

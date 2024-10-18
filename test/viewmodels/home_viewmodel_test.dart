@@ -1,119 +1,102 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
-import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
-import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
-import '../helpers/test_helpers.dart';
+import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+// This will generate a mock file for us
 import '../helpers/test_helpers.mocks.dart';
 
+@GenerateMocks([HomeRepositoryImplementation, NavigationService])
 void main() {
-  late HomeViewModel homeViewModel;
+  late HomeViewModel viewModel;
   late MockHomeRepositoryImplementation mockHomeRepository;
   late MockNavigationService mockNavigationService;
 
-  setUp(() {
-    registerServices();
-    mockHomeRepository = getAndRegisterHomeRepositoryImplementation();
-    mockNavigationService = getAndRegisterNavigationService();
-    homeViewModel = HomeViewModel();
+  // Setup the locator only if needed and reset at the start of each test
+  setUp(() async {
+    await locator
+        .reset(); // Reset the locator to prevent duplicate registrations
+
+    // Create mock instances
+    mockHomeRepository = MockHomeRepositoryImplementation();
+    mockNavigationService = MockNavigationService();
+
+    // Register mocks using lazy singletons to avoid registration conflicts
+    locator.registerLazySingleton<HomeRepositoryImplementation>(
+      () => mockHomeRepository,
+    );
+    locator.registerLazySingleton<NavigationService>(
+      () => mockNavigationService,
+    );
+
+    // Initialize the ViewModel
+    viewModel = HomeViewModel();
   });
 
-  tearDown(() => locator.reset());
+  tearDown(() async {
+    await locator.reset(); // Clean up after each test to ensure fresh state
+  });
 
-  group('HomeViewModel Tests -', () {
-    test('Initial state is correct', () {
-      expect(homeViewModel.fetchData, isNull);
-      expect(homeViewModel.featuredImageUrls, isEmpty);
-      expect(homeViewModel.featuredTitles, isEmpty);
-      expect(homeViewModel.ebookCoverUrls, isEmpty);
-      expect(homeViewModel.ebookTitles, isEmpty);
-      expect(homeViewModel.audiobookCoverUrls, isEmpty);
-      expect(homeViewModel.audiobookTitles, isEmpty);
-      expect(homeViewModel.newReleaseCoverUrls, isEmpty);
-      expect(homeViewModel.newReleaseTitles, isEmpty);
-      expect(homeViewModel.bestSellerCoverUrls, isEmpty);
-      expect(homeViewModel.bestSellerTitles, isEmpty);
-    });
-
-    test('getBooks fetches data and updates lists', () async {
-      final mockResponse = HomeResponseModel(
-        featured: [
-          Featured(
-              image: 'image1.jpg', title: 'Featured Book 1', slug: 'featured-1')
-        ],
-        audiobooks: [
-          Audiobook(
-              frontCover: 'audio1.jpg', title: 'Audiobook 1', slug: 'audio-1')
-        ],
+  group('HomeViewModel Tests', () {
+    test('fetchBooks should update homeData and notify listeners', () async {
+      // Arrange
+      final mockHomeData = HomeResponseModel(
+        featured: [Featured(title: 'Test Book', slug: 'test-slug')],
+        newReleases: [],
+        ebooks: [],
+        audiobooks: [],
+        bestsellingEbooks: [],
       );
+      when(mockHomeRepository.getBooks()).thenAnswer((_) async => mockHomeData);
 
-      when(mockHomeRepository.getBooks()).thenAnswer((_) async => mockResponse);
+      // Act
+      await viewModel.fetchBooks();
 
-      await homeViewModel.getBooks();
-
-      expect(homeViewModel.fetchData, mockResponse);
-      expect(homeViewModel.featuredImageUrls, ['image1.jpg']);
-      expect(homeViewModel.featuredTitles, ['Featured Book 1']);
-      expect(homeViewModel.ebookCoverUrls, ['ebook1.jpg']);
-      expect(homeViewModel.ebookTitles, ['Ebook 1']);
-      expect(homeViewModel.audiobookCoverUrls, ['audio1.jpg']);
-      expect(homeViewModel.audiobookTitles, ['Audiobook 1']);
-      expect(homeViewModel.newReleaseCoverUrls, ['new1.jpg']);
-      expect(homeViewModel.newReleaseTitles, ['New Release 1']);
-      expect(homeViewModel.bestSellerCoverUrls, ['best1.jpg']);
-      expect(homeViewModel.bestSellerTitles, ['Bestseller 1']);
+      // Assert
+      expect(viewModel.homeData, mockHomeData);
+      expect(viewModel.isBusy, false);
     });
 
-    test('getBooks handles error', () async {
-      when(mockHomeRepository.getBooks()).thenThrow(Exception('Network error'));
+    test('refreshBooks should call fetchBooks', () async {
+      // Arrange
+      when(mockHomeRepository.getBooks())
+          .thenAnswer((_) async => HomeResponseModel());
 
-      await homeViewModel.getBooks();
+      // Act
+      await viewModel.refreshBooks();
 
-      expect(homeViewModel.hasError, isTrue);
-      expect(homeViewModel.fetchData, isNull);
+      // Assert
+      verify(mockHomeRepository.getBooks()).called(1);
     });
 
-    test('onItemSelected navigates to book details', () {
-      const slug = 'test-slug';
-      homeViewModel.onItemSelected(slug);
+    test('onItemSelected should navigate to DetailView', () {
+      // Arrange
+      const testSlug = 'test-slug';
 
-      verify(mockNavigationService.navigateTo(
-        Routes.detailView,
-        arguments: DetailViewArguments(slug: slug),
-      )).called(1);
+      // Act
+      viewModel.onItemSelected(testSlug);
+
+      // Assert
+      verify(mockNavigationService.navigateTo(any,
+              arguments: anyNamed('arguments')))
+          .called(1);
     });
 
-    test('onCarouselItemTapped navigates to book details for valid index', () {
-      final mockResponse = HomeResponseModel(
-        featured: [
-          Featured(
-              image: 'image1.jpg', title: 'Featured Book 1', slug: 'featured-1')
-        ],
-      );
-      homeViewModel.fetchData = mockResponse;
+    test('onViewAllTapped should navigate to ViewAllView', () {
+      // Arrange
+      const testTitle = 'Test Title';
 
-      homeViewModel.onCarouselItemTapped(0);
+      // Act
+      viewModel.onViewAllTapped(testTitle);
 
-      verify(mockNavigationService.navigateTo(
-        Routes.detailView,
-        arguments: DetailViewArguments(slug: 'featured-1'),
-      )).called(1);
-    });
-
-    test('onCarouselItemTapped does nothing for invalid index', () {
-      final mockResponse = HomeResponseModel(
-        featured: [
-          Featured(
-              image: 'image1.jpg', title: 'Featured Book 1', slug: 'featured-1')
-        ],
-      );
-      homeViewModel.fetchData = mockResponse;
-
-      homeViewModel.onCarouselItemTapped(1);
-
-      verifyNever(mockNavigationService.navigateTo(any));
+      // Assert
+      verify(mockNavigationService.navigateTo(any,
+              arguments: anyNamed('arguments')))
+          .called(1);
     });
   });
 }

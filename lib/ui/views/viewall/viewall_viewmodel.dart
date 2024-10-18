@@ -28,16 +28,16 @@ class ViewallViewModel extends BaseViewModel {
     setBusy(true);
     switch (_title) {
       case "New Releases":
-        _items = _homeViewModel.homeData.newReleases ?? [];
+        _items = _homeViewModel.homeData!.newReleases ?? [];
         break;
       case "Recent E-books":
-        _items = _homeViewModel.homeData.ebooks ?? [];
+        _items = _homeViewModel.homeData!.ebooks ?? [];
         break;
       case "Recent Audiobooks":
-        _items = _homeViewModel.homeData.audiobooks ?? [];
+        _items = _homeViewModel.homeData!.audiobooks ?? [];
         break;
       case "Best Sellers":
-        _items = _homeViewModel.homeData.bestsellingEbooks ?? [];
+        _items = _homeViewModel.homeData!.bestsellingEbooks ?? [];
         break;
       default:
         _items = [];
