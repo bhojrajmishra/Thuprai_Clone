@@ -59,7 +59,7 @@ class DetailViewModel extends BaseViewModel {
       final cartRequest = CartRequestModel(
         path: "/book/$id",
         quantity: 1,
-        url: "http://127.0.0.1:8000/v1/api/products/$id",
+        url: "http://127.0.0.1:8000/v1/api/products/$id/",
       );
       debugPrint('Cart request: ${cartRequest.toJson()}');
       await _bookRepository.addCart(cartRequest);

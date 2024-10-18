@@ -12,12 +12,12 @@ import 'package:stacked_services/src/dialog/dialog_service.dart';
 import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_shared/stacked_shared.dart';
+import 'package:thuprai_clone/network/dio_client.dart';
 import 'package:thuprai_clone/network/retro_client.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
 import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
-import 'package:thuprai_clone/ui/views/registration/repository/registration_repogitory_implementation.dart';
 
 import '../ui/views/login/repository/login_repository_implementation.dart';
 
@@ -37,10 +37,10 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => NavigationService());
   locator.registerLazySingleton(() => LoginRepositoryImpl());
   locator.registerLazySingleton(() => SnackbarService());
-  locator.registerLazySingleton(() => RetroClient(Dio()));
+  locator.registerLazySingleton(() => RetroClient(locator<DioClient>().client));
   locator.registerLazySingleton(() => HomeRepositoryImplementation());
   locator.registerLazySingleton(() => SecureStorageService());
   locator.registerLazySingleton(() => CartRepositoryImplementation());
   locator.registerLazySingleton(() => BookRepositoryImplementation());
-  locator.registerLazySingleton(() => RegistrationRepogitoryImplementation());
+  locator.registerLazySingleton(() => DioClient());
 }

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:retrofit/error_logger.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:thuprai_clone/network/dio_client.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
 import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
@@ -14,34 +14,35 @@ part 'retro_client.g.dart';
 
 @RestApi(baseUrl: "https://tbe.thuprai.com/v1/")
 abstract class RetroClient {
-  factory RetroClient(Dio dio, {String? baseUrl}) = _RetroClient;
-//get home page data
+  factory RetroClient(Dio dio,
+      {String? baseUrl, ParseErrorLogger? errorLogger}) = _RetroClient;
+
   @GET('index/')
   Future<HomeResponseModel?> getBooks();
-//registration
+
   @POST('api/signup/')
   Future<RegistrationResponse> signup(
       @Body() RegistrationRequest registrationRequest);
-//login
+
   @POST('api/login/')
   Future<LoginResponse> login(@Body() LoginRequest loginRequest);
-//get book data
+
   @GET("book/{slug}")
   Future<BookModel> getBookData(@Path("slug") String slug);
-//logout
+
   @GET("api/logout/")
   Future<void> logout();
-  //add cart accordint to product
+
   @POST('api/basket/add-product/')
   Future<CartRequestModel> addCart(@Body() CartRequestModel cartRequest);
-//get cart list
+
   @GET('api/basket/')
   Future<CartModel> getCart();
-//delete cart item
+
   @DELETE("api/baskets/{cartId}/lines/{linesId}/")
   Future<void> deleteCart(
       @Path('cartId') String cartId, @Path('linesId') String linesId);
-//update cart item
+
   @PUT("api/baskets/{cartId}/lines/{linesId}/")
   Future<void> updateCart(@Path('cartId') String cartId,
       @Path('linesId') String linesId, @Body() CartRequestModel updateCart);

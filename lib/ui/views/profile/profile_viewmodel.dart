@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
+import 'package:thuprai_clone/ui/views/login/login_view.dart';
 
 class ProfileViewModel extends BaseViewModel {
   final SecureStorageService _secureStorage = SecureStorageService();
   final SnackbarService _snackbarService = SnackbarService();
+  final NavigationService _navigationService = NavigationService();
 
   String imageUrls =
       'https://www.pngitem.com/pimgs/m/146-1468479_my-profile-icon-blank-profile-picture-circle-hd.png';
@@ -21,6 +23,7 @@ class ProfileViewModel extends BaseViewModel {
 
   Future<void> logout() async {
     await _secureStorage.deleteData('token');
+    _navigationService.navigateToView(LoginView());
     debugPrint('Logged out successfully');
     _snackbarService.showSnackbar(
       message: 'Logged out successfully',

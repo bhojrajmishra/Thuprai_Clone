@@ -1,57 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
+import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 
-class ViewallViewModel extends BaseViewModel with Initialisable {
-  final HomeViewModel _homeViewModel = HomeViewModel();
-  final NavigationService _navigationService = NavigationService();
-  @override
-  Future<void> initialise() async {
-    await getBooks();
-    debugPrint('ViewallViewModel initialised ');
+class ViewallViewModel extends BaseViewModel {
+  final HomeViewModel _homeViewModel = locator<HomeViewModel>();
+  final NavigationService _navigationService = locator<NavigationService>();
+
+  String _title = '';
+  String get title => _title;
+
+  List<dynamic> _items = [];
+  List<dynamic> get items => _items;
+
+  bool _isGridView = true;
+  bool get isGridView => _isGridView;
+
+  void init(String title) {
+    _title = title;
+    _loadItems();
   }
 
-  List<dynamic> coverUrls = [];
-
-  List<String> titles = [];
-
-  Future<void> getBooks() async {
-    try {
-      setBusy(true);
-      await _homeViewModel.getBooks();
-      titles.addAll(_homeViewModel.featuredTitles);
-      titles.addAll(_homeViewModel.ebookTitles);
-      titles.addAll(_homeViewModel.audiobookTitles);
-      titles.addAll(_homeViewModel.newReleaseTitles);
-      titles.addAll(_homeViewModel.bestSellerTitles);
-      coverUrls.addAll(_homeViewModel.ebookCoverUrls);
-      coverUrls.addAll(_homeViewModel.audiobookCoverUrls);
-      coverUrls.addAll(_homeViewModel.newReleaseCoverUrls);
-      coverUrls.addAll(_homeViewModel.bestSellerCoverUrls);
-      coverUrls.addAll(_homeViewModel.featuredImageUrls);
-      notifyListeners();
-    } catch (e) {
-      setError(e);
-      debugPrint('Error fetching books: $e');
-    } finally {
-      setBusy(false);
+  void _loadItems() {
+    setBusy(true);
+    switch (_title) {
+      case "New Releases":
+        _items = _homeViewModel.homeData.newReleases ?? [];
+        break;
+      case "Recent E-books":
+        _items = _homeViewModel.homeData.ebooks ?? [];
+        break;
+      case "Recent Audiobooks":
+        _items = _homeViewModel.homeData.audiobooks ?? [];
+        break;
+      case "Best Sellers":
+        _items = _homeViewModel.homeData.bestsellingEbooks ?? [];
+        break;
+      default:
+        _items = [];
     }
+    setBusy(false);
   }
-
-  bool isGridView = true;
 
   void toggleViewMode() {
-    isGridView = !isGridView;
+    _isGridView = !_isGridView;
     notifyListeners();
   }
 
-  void onModelReady() {
-    initialise();
-  }
-
-  void onItemSelected() {
-    _navigationService.navigateTo(Routes.detailView);
+  void onItemSelected(String slug) {
+    _navigationService.navigateTo(
+      Routes.detailView,
+      arguments: DetailViewArguments(slug: slug),
+    );
   }
 }
