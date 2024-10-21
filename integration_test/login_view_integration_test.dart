@@ -52,8 +52,8 @@ void main() async {
       await Future.delayed(const Duration(seconds: 2));
 
       /// Check if login is allowed when valid credentials are inputted.
-      await tester.enterText(emailTextfield, 'timalsinasuman876@gmail.com');
-      await tester.enterText(passwordTextfield, 'suman@#123');
+      await tester.enterText(emailTextfield, 'ram@gmail.com');
+      await tester.enterText(passwordTextfield, 'ram@#123');
       await tester.tap(loginButton);
       await Future.delayed(const Duration(seconds: 3));
 
