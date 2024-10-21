@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "217146418423",
+    "project_id": "thuprai-clone",
+    "storage_bucket": "thuprai-clone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217146418423:android:51f4361b23ab1e31041ff2",
+        "android_client_info": {
+          "package_name": "com.example.thuprai_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCVx3Pa-oF6kl5JyaVWuIchNx-JWSmoIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217146418423:android:ea6b735f0ac40378041ff2",
+        "android_client_info": {
+          "package_name": "com.example.thuprai_clone.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCVx3Pa-oF6kl5JyaVWuIchNx-JWSmoIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217146418423:android:89680ddbf13c6680041ff2",
+        "android_client_info": {
+          "package_name": "com.example.thuprai_clone.stg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCVx3Pa-oF6kl5JyaVWuIchNx-JWSmoIM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
