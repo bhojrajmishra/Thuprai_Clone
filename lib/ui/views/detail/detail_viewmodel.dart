@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 
 import 'package:thuprai_clone/ui/views/detail/model/book_model.dart';
@@ -8,6 +9,8 @@ import 'package:thuprai_clone/ui/views/detail/repository/book_repository_impleme
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
 
 class DetailViewModel extends BaseViewModel {
+  final SnackbarService _snackbarService = locator<SnackbarService>();
+
   final BookRepositoryImplementation _bookRepository =
       locator<BookRepositoryImplementation>();
 
@@ -63,6 +66,12 @@ class DetailViewModel extends BaseViewModel {
       debugPrint('Cart request: ${cartRequest.toJson()}');
       await _bookRepository.addCart(cartRequest);
       notifyListeners();
+
+      _snackbarService.closeSnackbar();
+      _snackbarService.showSnackbar(
+        message: 'Successfully Added to cart',
+        duration: Duration(seconds: 2),
+      );
     } catch (e) {
       debugPrint('Error adding to cart: $e');
     } finally {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/theme/custom_theme.dart';
-import 'package:thuprai_clone/ui/common/app_colors.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_viewmodel.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
@@ -21,7 +20,7 @@ class CartView extends StackedView<CartViewModel> {
       body: viewModel.isBusy
           ? const Center(child: CircularProgressIndicator())
           : viewModel.cartModel == null || viewModel.cartModel!.lines!.isEmpty
-              ? Center(
+              ? const Center(
                   child: BaseErrorMessage(
                     message: 'No items in cart',
                     // textStyle: CustomTheme.bodyLarge(context),
@@ -104,17 +103,17 @@ class CartView extends StackedView<CartViewModel> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              'Subtotal: ${viewModel.totalPrice().toStringAsFixed(2)}',
+                              'Subtotal: ${viewModel.cartModel!.totalExclTax!}',
                               style: CustomTheme.bodyLarge(context),
                             ),
                             verticalSpaceSmall,
                             Text(
-                              'Discount: ${viewModel.discountAmount().toStringAsFixed(2)}',
+                              'Discount: ${viewModel.cartModel!.voucherDiscounts!.isNotEmpty ? viewModel.cartModel!.voucherDiscounts!.first : '0.00'}',
                               style: CustomTheme.bodyLarge(context),
                             ),
                             const Divider(height: 24),
                             Text(
-                              'Total: ${viewModel.totalAmount().toStringAsFixed(2)}',
+                              'Total: ${viewModel.cartModel!.totalTax!}',
                               style: CustomTheme.displayLarge(context),
                             ),
                             verticalSpaceMedium,

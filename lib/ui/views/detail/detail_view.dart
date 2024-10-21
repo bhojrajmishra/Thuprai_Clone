@@ -224,7 +224,6 @@ class DetailView extends StackedView<DetailViewModel> {
                     viewModel.bookData!.frontCover!,
                     viewModel.bookData!.paperback?.sellingPrice ?? 0,
                   );
-                  debugPrint('Add to cart button pressed');
                 }
               },
               color: Colors.blue,

@@ -10,6 +10,8 @@ import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implement
 class CartViewModel extends BaseViewModel {
   final NavigationService _navigation = locator<NavigationService>();
 
+  final SnackbarService _snackbarService = locator<SnackbarService>();
+
   final CartRepositoryImplementation _cartRepositoryImplementation =
       locator<CartRepositoryImplementation>();
 
@@ -34,14 +36,25 @@ class CartViewModel extends BaseViewModel {
   }
 
   Future<void> removeCartItem(String cartId, String linesId) async {
+    debugPrint('cartId: $cartId, linesId: $linesId');
     setBusy(true);
     try {
       await _cartRepositoryImplementation.deleteCartItem(cartId, linesId);
       debugPrint('Removed item from cart');
+      _snackbarService.showSnackbar(
+        message: 'Item removed from cart',
+        duration: Duration(seconds: 2),
+      );
       debugPrint('response of cart response: ${_cartModel?.toJson()}');
       await fetchCart(); // Refresh cart after removing item
     } catch (e) {
       // Handle error
+      debugPrint('Error removing item from cart: $e');
+      _snackbarService.closeSnackbar();
+      _snackbarService.showSnackbar(
+        message: 'Error removing item from cart',
+        duration: Duration(seconds: 2),
+      );
     } finally {
       setBusy(false);
     }
@@ -53,24 +66,24 @@ class CartViewModel extends BaseViewModel {
     try {
       await _cartRepositoryImplementation.updateCartItem(
           cartId, linesId, updateCart);
+      debugPrint('Updated item in cart');
+      _snackbarService.closeSnackbar();
+      _snackbarService.showSnackbar(
+        message: 'Item updated in cart',
+        duration: Duration(seconds: 2),
+      );
       await fetchCart(); // Refresh cart after updating item
     } catch (e) {
       // Handle error
+      debugPrint('Error updating item in cart: $e');
+      _snackbarService.closeSnackbar();
+      _snackbarService.showSnackbar(
+        message: 'Error updating item in cart',
+        duration: Duration(seconds: 2),
+      );
     } finally {
       setBusy(false);
     }
-  }
-
-  double totalPrice() {
-    return double.tryParse(_cartModel?.totalInclTax ?? '0') ?? 0;
-  }
-
-  double discountAmount() {
-    return totalPrice() * 0.1;
-  }
-
-  double totalAmount() {
-    return totalPrice() - discountAmount();
   }
 
   void onItemSelected(String slug) {

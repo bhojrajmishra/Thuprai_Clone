@@ -4,7 +4,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:thuprai_clone/ui/views/home/home_viewmodel.dart';
-import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
 
 class ViewallViewModel extends BaseViewModel {
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();

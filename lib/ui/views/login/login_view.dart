@@ -6,6 +6,7 @@ import 'package:thuprai_clone/base/widgets/base_gesture_detector.dart';
 import 'package:thuprai_clone/base/widgets/base_horizontal_line.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/base/widgets/base_text_field.dart';
+import 'package:thuprai_clone/constants/constats_links.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
 import 'login_viewmodel.dart';
@@ -38,15 +39,13 @@ class LoginView extends StackedView<LoginViewModel> {
                 BaseGestureDetector(
                   onPressed: viewModel.requestgoogleSignIn,
                   title: 'Sign-in with Google',
-                  imageaddress:
-                      'http://pngimg.com/uploads/google/google_PNG19635.png',
+                  imageaddress: ConstatsLinks.GoogleUrl,
                 ),
                 const SizedBox(height: 10),
                 BaseGestureDetector(
                   onPressed: viewModel.requestfacebookSignIn,
                   title: 'Sign-in with Facebook',
-                  imageaddress:
-                      'http://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19754.png',
+                  imageaddress: ConstatsLinks.FacebookUrl,
                 ),
                 const BaseHorizontalLine(
                   label: 'Or continue with email',

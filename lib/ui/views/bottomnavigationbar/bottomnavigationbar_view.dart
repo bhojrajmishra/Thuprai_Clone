@@ -32,7 +32,7 @@ class BottomnavigationbarView
           IconButton(
             icon: Badge(
                 label: Text(
-                  viewModel.cartItemCount.toString(),
+                  viewModel.cartCount().toString(),
                   style: const TextStyle(color: Colors.white),
                 ),
                 child: const Icon(Icons.shopping_cart)),
