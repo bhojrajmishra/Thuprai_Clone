@@ -6,6 +6,8 @@ plugins {
 }
 
 android {
+
+    
     namespace = "com.example.thuprai_clone"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion

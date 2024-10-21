@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
@@ -86,10 +87,38 @@ class CartViewModel extends BaseViewModel {
     }
   }
 
-  void onItemSelected(String slug) {
-    _navigation.navigateTo(
-      Routes.detailView,
-      arguments: DetailViewArguments(slug: slug),
+  void onDeleteCartShowDialog(
+      BuildContext context, String cartId, String linesId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Item'),
+          content: Text('Are you sure you want to delete this item?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                removeCartItem(cartId, linesId);
+                Navigator.of(context).pop();
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
     );
+
+    void onItemSelected(String slug) {
+      _navigation.navigateTo(
+        Routes.detailView,
+        arguments: DetailViewArguments(slug: slug),
+      );
+    }
   }
 }

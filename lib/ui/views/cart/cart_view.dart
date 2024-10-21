@@ -76,7 +76,8 @@ class CartView extends StackedView<CartViewModel> {
                                   icon: Icon(Icons.delete,
                                       color: CustomTheme.primary(context)),
                                   onPressed: () {
-                                    viewModel.removeCartItem(
+                                    viewModel.onDeleteCartShowDialog(
+                                      context,
                                       viewModel.cartModel!.id.toString(),
                                       item.id.toString(),
                                     );
