@@ -13,7 +13,9 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      title: Text(title),
+      title: Text(title,
+          style: const TextStyle(color: Color.fromARGB(255, 33, 110, 243))),
+      iconTheme: IconThemeData(color: const Color.fromARGB(255, 33, 110, 243)),
       backgroundColor: backgroundColor,
       actions: actions,
     );

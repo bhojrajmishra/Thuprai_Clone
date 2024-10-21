@@ -7,7 +7,28 @@ plugins {
 
 android {
 
-    
+        flavorDimensions 'default'
+    productFlavors {
+        production {
+            dimension 'default'
+            resValue "string", "thuprai_clone", "THUPRAI"
+        }
+        development {
+            dimension 'default'
+            applicationIdSuffix '.dev'
+            versionNameSuffix '.dev'
+            resValue "string", "thuprai_clone", "THUPRAI.DEV"
+        }
+
+        staging {
+            dimension 'default'
+            applicationIdSuffix '.stg'
+            versionNameSuffix '.stg'
+            resValue "string", "thuprai_clone", "THUPRAI.STG"
+        }
+    }
+
+
     namespace = "com.example.thuprai_clone"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion

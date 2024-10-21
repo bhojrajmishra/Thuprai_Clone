@@ -114,7 +114,7 @@ class CartView extends StackedView<CartViewModel> {
                             ),
                             const Divider(height: 24),
                             Text(
-                              'Total: ${viewModel.cartModel!.totalTax!}',
+                              'Total: ${viewModel.cartModel!.totalExclTax!}',
                               style: CustomTheme.displayLarge(context),
                             ),
                             verticalSpaceMedium,
