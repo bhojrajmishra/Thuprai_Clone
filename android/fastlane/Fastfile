@@ -13,36 +13,70 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
+
 default_platform(:android)
 
+
+
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
+  desc "producti app"
+  lane :distribute do
+      build_android_app( 
+          flavor: "staging",
+          build_type: "Release"
+      )
+      # build_android_app is a built-in fastlane action.
+      release = firebase_app_distribution(
+          APP_ID: "1:217146418423:android:51f4361b23ab1e31041ff2",
+          groups: "internal-testers",
+          release_notes: "fix bugs",
+          apk_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
+      )
+      debug(release)
   end
+end
 
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
-    gradle(task: "clean assembleRelease")
-    crashlytics
-  
-    # sh "your_script.sh"
-    # You can also use other beta testing services here
-  end
-
-  desc "Deploy a new version to the Google Play"
+platform :android do
+  desc "deploy to firebase"
   lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
+      firebase_app_distribution(
+          app: "1:217146418423:android:51f4361b23ab1e31041ff2",
+          groups: "internal-testers",
+          release_notes: "fix bugs",
+          apk_path: "../build/app/outputs/flutter-apk/app-production-release.apk",
+          debug: true
+      )
   end
+end
 
+platform :android do
+  desc "increment version code"
+  lane :increment_version_code do
+      increment_version_code(
+          gradle_file_path: "app/build.gradle"
+      )
+  end
+end
+
+platform :android do
   desc "flutter clean"
   lane :clean do
-    gradle(task: "clean")
+      sh("flutter clean")
   end
+end
 
-  desc "flutter build apk"
-  lane :build do
-    gradle(task: "assembleRelease")
+platform :android do
+  desc "automatically release notes"
+  lane :release_notes do
+      changelog_from_git_commits(
+          between: ["develop", "master"]
+      )
+  end
+end
+
+platform :android do
+  desc "flutter pub get"
+  lane :pub_get do
+      sh("flutter pub get")
   end
 end
