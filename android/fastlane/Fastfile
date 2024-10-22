@@ -35,4 +35,14 @@ platform :android do
     gradle(task: "clean assembleRelease")
     upload_to_play_store
   end
+
+  desc "flutter clean"
+  lane :clean do
+    gradle(task: "clean")
+  end
+
+  desc "flutter build apk"
+  lane :build do
+    gradle(task: "assembleRelease")
+  end
 end

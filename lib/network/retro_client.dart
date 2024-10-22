@@ -12,7 +12,6 @@ import 'package:thuprai_clone/ui/views/registration/model/registration_response.
 
 part 'retro_client.g.dart';
 
-@RestApi(baseUrl: "https://tbe.thuprai.com/v1/")
 abstract class RetroClient {
   factory RetroClient(Dio dio,
       {String? baseUrl, ParseErrorLogger? errorLogger}) = _RetroClient;

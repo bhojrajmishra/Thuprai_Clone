@@ -1,0 +1,10 @@
+{
+  "projects": {
+    "thuprai_clone-app": "thuprai-clone",
+    "thuprai_clone-app-staging": "thuprai-clone",
+    "thuprai_clone-app-development": "thuprai-clone"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}

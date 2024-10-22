@@ -12,11 +12,14 @@ Future<void> main() async {
   await setupLocator();
   setupDialogUi();
   setupBottomSheetUi();
-  runApp(DevicePreview(builder: (context) => const MainApp()));
+  runApp(DevicePreview(
+      builder: (context) => const MainApp(
+            env: '',
+          )));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  const MainApp({super.key, required String env});
 
   @override
   Widget build(BuildContext context) {

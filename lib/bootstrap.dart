@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:thuprai_clone/app/app.bottomsheets.dart';
@@ -6,10 +7,14 @@ import 'package:thuprai_clone/app/app.dialogs.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/firebase_options.dart';
 
 Future<void> bootstrap(String env) async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupDialogUi();
   setupBottomSheetUi();
   runApp(DevicePreview(
