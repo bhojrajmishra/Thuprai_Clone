@@ -11,7 +11,6 @@ class DioInterceptor extends Interceptor {
   final NavigationService _navigationService = locator<NavigationService>();
   final DialogService _dialogService = locator<DialogService>();
   final Logger _logger = Logger();
-
   static const String _authHeaderKey = 'Authorization';
   static const String _tokenKey = 'token';
   static const String _tokenPrefix = 'Token';

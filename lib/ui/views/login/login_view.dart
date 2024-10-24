@@ -6,6 +6,7 @@ import 'package:thuprai_clone/base/widgets/base_gesture_detector.dart';
 import 'package:thuprai_clone/base/widgets/base_horizontal_line.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/base/widgets/base_text_field.dart';
+import 'package:thuprai_clone/constants/app_text_constants.dart';
 import 'package:thuprai_clone/constants/constats_links.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
@@ -30,7 +31,7 @@ class LoginView extends StackedView<LoginViewModel> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Please login to your account using',
+                  AppTextConstants.pleaseLogin,
                   style: TextStyle(
                     fontSize: 15,
                   ),
@@ -38,29 +39,29 @@ class LoginView extends StackedView<LoginViewModel> {
                 verticalSpaceLarge,
                 BaseGestureDetector(
                   onPressed: viewModel.requestgoogleSignIn,
-                  title: 'Sign-in with Google',
+                  title: AppTextConstants.signWithGoogle,
                   imageaddress: ConstatsLinks.GoogleUrl,
                 ),
                 const SizedBox(height: 10),
                 BaseGestureDetector(
                   onPressed: viewModel.requestfacebookSignIn,
-                  title: 'Sign-in with Facebook',
+                  title: AppTextConstants.signWithFacebok,
                   imageaddress: ConstatsLinks.FacebookUrl,
                 ),
                 const BaseHorizontalLine(
-                  label: 'Or continue with email',
+                  label: AppTextConstants.labelTextForDivider,
                   height: 100,
                 ),
                 BaseTextField(
                   controller: viewModel.emailController,
-                  labelText: "Email",
+                  labelText: AppTextConstants.labelTextForEmail,
                   obscureText: false,
                   validator: (value) => Validator.emailValidator(value),
                 ),
                 const SizedBox(height: 23),
                 BaseTextField(
                   controller: viewModel.passwordController,
-                  labelText: "Password",
+                  labelText: AppTextConstants.labelTextForPassword,
                   obscureText: !viewModel.isPasswordVisible,
                   validator: (value) => Validator.passwordValidator(value),
                   suffixIcon: IconButton(
@@ -74,7 +75,7 @@ class LoginView extends StackedView<LoginViewModel> {
                 ),
                 const SizedBox(height: 23),
                 BaseButton(
-                  text: 'Continue',
+                  text: AppTextConstants.procced,
                   onPressed: viewModel.requestLoginApi,
                   color: const Color.fromARGB(255, 45, 88, 231),
                   width: double.infinity,
@@ -83,12 +84,12 @@ class LoginView extends StackedView<LoginViewModel> {
                   children: [
                     BaseTextButton(
                       onPressed: viewModel.navigateToHome,
-                      text: 'Forgot Password?',
+                      text: AppTextConstants.forgetPasswordd,
                     ),
                     const Spacer(),
                     BaseTextButton(
                       onPressed: viewModel.navigateToSignUp,
-                      text: 'Sign Up',
+                      text: AppTextConstants.signUp,
                     ),
                   ],
                 ),

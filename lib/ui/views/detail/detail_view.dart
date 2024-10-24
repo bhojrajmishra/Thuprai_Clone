@@ -5,6 +5,7 @@ import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_divider.dart';
 import 'package:thuprai_clone/base/widgets/base_list_tile.dart';
 import 'package:thuprai_clone/base/widgets/base_outline_button.dart';
+import 'package:thuprai_clone/constants/app_text_constants.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
 import 'detail_viewmodel.dart';
@@ -25,7 +26,8 @@ class DetailView extends StackedView<DetailViewModel> {
   ) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: viewModel.bookData?.nepaliTitle ?? "Book Details",
+        title:
+            viewModel.bookData?.nepaliTitle ?? AppTextConstants.bookDetailTitle,
         backgroundColor: Colors.white,
         actions: [
           IconButton(
@@ -120,7 +122,7 @@ class DetailView extends StackedView<DetailViewModel> {
                         if (viewModel.bookData?.paperback != null)
                           Expanded(
                             child: BaseOutlineButton(
-                              title: 'Paperback',
+                              title: AppTextConstants.paperbackTitle,
                               subtitle:
                                   'Rs. ${viewModel.bookData?.paperback?.sellingPrice}',
                               onPressed: () {
@@ -134,7 +136,7 @@ class DetailView extends StackedView<DetailViewModel> {
                         if (viewModel.bookData?.ebook != null)
                           Expanded(
                             child: BaseOutlineButton(
-                              title: 'Ebook',
+                              title: AppTextConstants.ebookTitle,
                               subtitle:
                                   'Rs. ${viewModel.bookData?.ebook?.sellingPrice}',
                               onPressed: () {
@@ -142,17 +144,10 @@ class DetailView extends StackedView<DetailViewModel> {
                               },
                             ),
                           ),
-                        if (viewModel.bookData?.audiobook != null)
-                          Expanded(
-                              child: BaseOutlineButton(
-                                  title: 'AudioBook',
-                                  subtitle:
-                                      'Rs. ${viewModel.bookData?.audiobook}',
-                                  onPressed: () {}))
                       ],
                     ),
                     BaseListTile(
-                      title: 'Description',
+                      title: AppTextConstants.descriptionTitle,
                       subtitle: viewModel.bookData?.backCoverText ?? '',
                     ),
                     const BaseDivider(),
@@ -197,9 +192,9 @@ class DetailView extends StackedView<DetailViewModel> {
           children: [
             BaseButton(
               width: 150,
-              text: "Buy Now",
+              text: AppTextConstants.buyNowText,
               onPressed: () {
-                debugPrint('Buy now');
+                debugPrint(AppTextConstants.buyNowText);
 
                 // if (viewModel.bookData != null) {
                 //   viewModel.addToCartAndNavigate(
@@ -215,7 +210,7 @@ class DetailView extends StackedView<DetailViewModel> {
             horizontalSpaceMedium,
             BaseButton(
               width: 150,
-              text: "Add to Cart",
+              text: AppTextConstants.addTOcartText,
               onPressed: () {
                 if (viewModel.bookData != null) {
                   viewModel.addCart(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_carousel.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
+import 'package:thuprai_clone/constants/app_text_constants.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'package:thuprai_clone/theme/custom_theme.dart';
 import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
@@ -19,7 +19,9 @@ class HomeView extends StackedView<HomeViewModel> {
       body: RefreshIndicator(
         onRefresh: viewModel.refreshBooks,
         child: viewModel.isBusy
-            ? const Center(child: HomeShimmer())
+            ? const Center(
+                child: HomeShimmer(),
+              )
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -31,34 +33,34 @@ class HomeView extends StackedView<HomeViewModel> {
                       _buildFeaturedTitles(context, viewModel),
                       _buildSection(
                         context: context,
-                        title: "New Releases",
+                        title: AppTextConstants.newReleaseTitle,
                         items: viewModel.homeData?.newReleases,
-                        onViewAll: () =>
-                            viewModel.onViewAllTapped("New Releases"),
+                        onViewAll: () => viewModel
+                            .onViewAllTapped(AppTextConstants.newReleaseTitle),
                         onItemTap: viewModel.onItemSelected,
                       ),
                       _buildSection(
                         context: context,
-                        title: "Recent E-books",
+                        title: AppTextConstants.recentEbook,
                         items: viewModel.homeData?.ebooks,
-                        onViewAll: () =>
-                            viewModel.onViewAllTapped("Recent E-books"),
+                        onViewAll: () => viewModel
+                            .onViewAllTapped(AppTextConstants.recentEbook),
                         onItemTap: viewModel.onItemSelected,
                       ),
                       _buildSection(
                         context: context,
-                        title: "Recent Audiobooks",
+                        title: AppTextConstants.recentAudioBook,
                         items: viewModel.homeData?.audiobooks,
-                        onViewAll: () =>
-                            viewModel.onViewAllTapped("Recent Audiobooks"),
+                        onViewAll: () => viewModel
+                            .onViewAllTapped(AppTextConstants.recentAudioBook),
                         onItemTap: viewModel.onItemSelected,
                       ),
                       _buildSection(
                         context: context,
-                        title: "Best Sellers",
+                        title: AppTextConstants.bestSeller,
                         items: viewModel.homeData?.bestsellingEbooks,
-                        onViewAll: () =>
-                            viewModel.onViewAllTapped("Best Sellers"),
+                        onViewAll: () => viewModel
+                            .onViewAllTapped(AppTextConstants.bestSeller),
                         onItemTap: viewModel.onItemSelected,
                       ),
                     ],
@@ -124,7 +126,7 @@ class HomeView extends StackedView<HomeViewModel> {
             ),
             const Spacer(),
             BaseTextButton(
-              text: 'View All',
+              text: AppTextConstants.viewAll,
               onPressed: onViewAll,
               textStyle: TextStyle(
                 color: CustomTheme.primary(context),

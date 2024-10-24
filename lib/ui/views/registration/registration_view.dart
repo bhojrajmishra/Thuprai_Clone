@@ -6,6 +6,8 @@ import 'package:thuprai_clone/base/widgets/base_gesture_detector.dart';
 import 'package:thuprai_clone/base/widgets/base_horizontal_line.dart';
 import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/base/widgets/base_text_field.dart';
+import 'package:thuprai_clone/constants/app_text_constants.dart';
+import 'package:thuprai_clone/constants/constats_links.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 
 import 'registration_viewmodel.dart';
@@ -37,16 +39,14 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                 verticalSpaceLarge,
                 BaseGestureDetector(
                   onPressed: viewModel.requestgoogleSignIn,
-                  title: 'Sign-in with Google',
-                  imageaddress:
-                      'http://pngimg.com/uploads/google/google_PNG19635.png',
+                  title: AppTextConstants.signWithGoogle,
+                  imageaddress: ConstatsLinks.GoogleUrl,
                 ),
                 const SizedBox(height: 10),
                 BaseGestureDetector(
                   onPressed: viewModel.requestfacebookSignIn,
-                  title: 'Sign-in with Facebook',
-                  imageaddress:
-                      'http://pngimg.com/uploads/facebook_logos/facebook_logos_PNG19754.png',
+                  title: AppTextConstants.signWithFacebok,
+                  imageaddress: ConstatsLinks.FacebookUrl,
                 ),
                 const BaseHorizontalLine(
                   label: 'Or continue with email',
@@ -61,14 +61,14 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                 const SizedBox(height: 23),
                 BaseTextField(
                   controller: viewModel.emailController,
-                  labelText: "Email",
+                  labelText: AppTextConstants.labelTextForEmail,
                   obscureText: false,
                   validator: (value) => Validator.emailValidator(value),
                 ),
                 const SizedBox(height: 23),
                 BaseTextField(
                   controller: viewModel.passwordController,
-                  labelText: "Password",
+                  labelText: AppTextConstants.labelTextForPassword,
                   obscureText: !viewModel.isPasswordVisible,
                   validator: (value) => Validator.passwordValidator(value),
                   suffixIcon: IconButton(
@@ -82,7 +82,7 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                 ),
                 const SizedBox(height: 23),
                 BaseButton(
-                  text: 'Sign Up',
+                  text: AppTextConstants.signUpText,
                   onPressed: () {
                     viewModel.requestRegisterApi();
                   },
@@ -91,9 +91,9 @@ class RegistrationView extends StackedView<RegistrationViewModel> {
                 ),
                 Column(
                   children: [
-                    SizedBox(height: 10),
-                    Text("Already have an account?"),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
+                    const Text(AppTextConstants.alreadyHaveAnAccountText),
+                    const SizedBox(height: 10),
                     BaseTextButton(
                       onPressed: viewModel.navigateToLogin,
                       text: 'Login here!',

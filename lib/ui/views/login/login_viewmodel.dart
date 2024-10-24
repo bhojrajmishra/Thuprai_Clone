@@ -3,7 +3,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
-import 'package:thuprai_clone/constants/constats_links.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_request.dart';
 import 'package:thuprai_clone/ui/views/login/model/login_response.dart';
