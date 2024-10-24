@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:thuprai_clone/base/widgets/base_app_bar.dart';
 import 'package:thuprai_clone/theme/custom_theme.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'package:thuprai_clone/ui/views/cart/cart_viewmodel.dart';
@@ -17,6 +18,10 @@ class CartView extends StackedView<CartViewModel> {
     Widget? child,
   ) {
     return Scaffold(
+      appBar: BaseAppBar(
+        title: "Cart",
+        backgroundColor: Colors.white,
+      ),
       body: viewModel.isBusy
           ? const Center(child: CircularProgressIndicator())
           : viewModel.cartModel == null || viewModel.cartModel!.lines!.isEmpty

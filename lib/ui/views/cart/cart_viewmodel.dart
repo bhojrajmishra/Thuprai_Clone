@@ -4,11 +4,14 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
+import 'package:thuprai_clone/ui/views/cart/cart_service.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_model.dart';
 import 'package:thuprai_clone/ui/views/cart/model/cart_request_model.dart';
 import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 
 class CartViewModel extends BaseViewModel {
+  final CartService _cartService = locator<CartService>();
+
   final NavigationService _navigation = locator<NavigationService>();
 
   final SnackbarService _snackbarService = locator<SnackbarService>();
@@ -27,7 +30,7 @@ class CartViewModel extends BaseViewModel {
     setBusy(true);
     try {
       _cartModel = await _cartRepositoryImplementation.getCart();
-      debugPrint('Fetched cart: ${_cartModel?.toJson()}');
+      _cartService.updateCart(_cartModel);
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching cart: $e');
@@ -44,7 +47,7 @@ class CartViewModel extends BaseViewModel {
       debugPrint('Removed item from cart');
       _snackbarService.showSnackbar(
         message: 'Item removed from cart',
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       );
       debugPrint('response of cart response: ${_cartModel?.toJson()}');
       await fetchCart(); // Refresh cart after removing item
@@ -54,7 +57,7 @@ class CartViewModel extends BaseViewModel {
       _snackbarService.closeSnackbar();
       _snackbarService.showSnackbar(
         message: 'Error removing item from cart',
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       );
     } finally {
       setBusy(false);
@@ -71,7 +74,7 @@ class CartViewModel extends BaseViewModel {
       _snackbarService.closeSnackbar();
       _snackbarService.showSnackbar(
         message: 'Item updated in cart',
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       );
       await fetchCart(); // Refresh cart after updating item
     } catch (e) {
@@ -80,7 +83,7 @@ class CartViewModel extends BaseViewModel {
       _snackbarService.closeSnackbar();
       _snackbarService.showSnackbar(
         message: 'Error updating item in cart',
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       );
     } finally {
       setBusy(false);
@@ -93,21 +96,21 @@ class CartViewModel extends BaseViewModel {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Item'),
-          content: Text('Are you sure you want to delete this item?'),
+          title: const Text('Delete Item'),
+          content: const Text('Are you sure you want to delete this item?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 removeCartItem(cartId, linesId);
                 Navigator.of(context).pop();
               },
-              child: Text('Delete'),
+              child: const Text('Delete'),
             ),
           ],
         );

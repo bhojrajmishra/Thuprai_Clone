@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:thuprai_clone/base/widgets/base_badge.dart';
 import 'package:thuprai_clone/base/widgets/base_bottom_navigation_bar.dart';
 import 'package:thuprai_clone/ui/views/profile/profile_view.dart';
 import 'bottomnavigationbar_viewmodel.dart';
@@ -30,12 +29,10 @@ class BottomnavigationbarView
             onPressed: () {},
           ),
           IconButton(
-            icon: Badge(
-                label: Text(
-                  viewModel.cartCount().toString(),
-                  style: const TextStyle(color: Colors.white),
-                ),
-                child: const Icon(Icons.shopping_cart)),
+            icon: Badge.count(
+              count: viewModel.cartCount(),
+              child: const Icon(Icons.shopping_cart),
+            ),
             onPressed: () {
               viewModel.navigateToCart();
             },

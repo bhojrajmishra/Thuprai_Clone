@@ -13,8 +13,8 @@ Future<void> bootstrap(String env) async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      options: DefaultFirebaseOptions.currentPlatform, name: env);
+
   setupDialogUi();
   setupBottomSheetUi();
   runApp(DevicePreview(
@@ -63,7 +63,6 @@ class MainApp extends StatelessWidget {
             theme: ThemeData(scaffoldBackgroundColor: Colors.white),
           );
         }
-
         if (env == 'production') {
           return MaterialApp(
             locale: DevicePreview.locale(context),

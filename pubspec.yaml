@@ -1,7 +1,7 @@
 name: thuprai_clone
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -25,8 +25,7 @@ dependencies:
   awesome_dio_interceptor: ^1.2.0
   http: ^1.2.2
   firebase_core: ^3.6.0
-
-  
+  flutter_launcher_icons: ^0.14.1
 
 dev_dependencies:
   integration_test:
@@ -38,7 +37,6 @@ dev_dependencies:
   retrofit_generator: ^9.1.2
   json_serializable: ^6.8.0
   test: ^1.25.7
-  flutter_launcher_icons: ^0.14.1
 
 flutter:
   uses-material-design: true

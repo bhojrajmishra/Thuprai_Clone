@@ -11,6 +11,7 @@ import 'package:stacked_shared/stacked_shared.dart';
 import 'package:thuprai_clone/network/dio_client.dart';
 import 'package:thuprai_clone/network/retro_client.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
+import 'package:thuprai_clone/ui/views/cart/cart_service.dart';
 import 'package:thuprai_clone/ui/views/cart/repository/cart_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/detail/repository/book_repository_implementation.dart';
 import 'package:thuprai_clone/ui/views/home/repository/home_repository_implementation.dart';
@@ -39,4 +40,5 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => CartRepositoryImplementation());
   locator.registerLazySingleton(() => BookRepositoryImplementation());
   locator.registerLazySingleton(() => DioClient());
+  locator.registerLazySingleton(() => CartService());
 }

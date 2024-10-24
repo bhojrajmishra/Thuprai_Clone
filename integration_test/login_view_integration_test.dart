@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
+import 'package:thuprai_clone/app/app.bottomsheets.dart';
+import 'package:thuprai_clone/app/app.dialogs.dart';
+import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/main.dart';
 
-void main() {
+void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-
+  await setupLocator();
+  setupBottomSheetUi();
+  setupDialogUi();
+  FlutterSecureStorage.setMockInitialValues({});
   group('End-to-End Test', () {
     testWidgets('Complete app flow test', (WidgetTester tester) async {
       // Start the app
@@ -17,19 +24,29 @@ void main() {
       expect(find.text('Loading ...'), findsOneWidget);
       await tester.pumpAndSettle();
 
-      // Test 2: Login View
-      expect(find.text('Please login to your account using'), findsOneWidget);
+      // Wait for the app to load
+      await Future.delayed(const Duration(seconds: 5));
+      //Test 1.1: check if user have token or not
+      final storage = FlutterSecureStorage();
+      final token = await storage.read(key: 'token');
+      if (token != null) {
+        // Test 1.2: Home View
+        expect(find.byType(RefreshIndicator), findsOneWidget);
+        return;
+      } else {
+        // Test 2: Login View
+        expect(find.text('Please login to your account using'), findsOneWidget);
+        // Test login form
+        await tester.enterText(
+            find.widgetWithText(TextField, 'Email'), 'test@example.com');
+        await tester.enterText(
+            find.widgetWithText(TextField, 'Password'), 'password123');
 
-      // Test login form
-      await tester.enterText(
-          find.widgetWithText(TextField, 'Email'), 'test@example.com');
-      await tester.enterText(
-          find.widgetWithText(TextField, 'Password'), 'password123');
-
-      // Find and tap login button
-      final loginButton = find.widgetWithText(ElevatedButton, 'Continue');
-      await tester.tap(loginButton);
-      await tester.pumpAndSettle();
+        // Find and tap login button
+        final loginButton = find.widgetWithText(ElevatedButton, 'Continue');
+        await tester.tap(loginButton);
+        await tester.pumpAndSettle();
+      }
 
       // Test 3: Registration View Navigation
       final signUpButton = find.widgetWithText(TextButton, 'Sign Up');
