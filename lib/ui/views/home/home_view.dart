@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:thuprai_clone/base/widgets/base_button.dart';
 import 'package:thuprai_clone/base/widgets/base_carousel.dart';
@@ -6,6 +7,7 @@ import 'package:thuprai_clone/base/widgets/base_text_button.dart';
 import 'package:thuprai_clone/ui/common/ui_helpers.dart';
 import 'package:thuprai_clone/theme/custom_theme.dart';
 import 'package:thuprai_clone/ui/views/home/model/home_response_model.dart';
+import 'package:thuprai_clone/ui/views/home/shimmer_wrapper/home_shimmer.dart';
 import 'home_viewmodel.dart';
 
 class HomeView extends StackedView<HomeViewModel> {
@@ -17,9 +19,7 @@ class HomeView extends StackedView<HomeViewModel> {
       body: RefreshIndicator(
         onRefresh: viewModel.refreshBooks,
         child: viewModel.isBusy
-            ? Center(
-                child: CircularProgressIndicator(
-                    color: CustomTheme.primary(context)))
+            ? const Center(child: HomeShimmer())
             : SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
