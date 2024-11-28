@@ -6,8 +6,11 @@
 
 // ignore_for_file: public_member_api_docs, implementation_imports, depend_on_referenced_packages
 
+import 'package:app_links/app_links.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stacked_shared/stacked_shared.dart';
+import 'package:thuprai_clone/base/service/deep_link_service.dart';
 import 'package:thuprai_clone/network/dio_client.dart';
 import 'package:thuprai_clone/network/retro_client.dart';
 import 'package:thuprai_clone/network/secure_storage.dart';
@@ -41,4 +44,7 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => BookRepositoryImplementation());
   locator.registerLazySingleton(() => DioClient());
   locator.registerLazySingleton(() => CartService());
+  locator.registerLazySingleton(() => Logger());
+  locator.registerLazySingleton(() => DeepLinkService(
+      navigationService: locator<NavigationService>(), appLinks: AppLinks()));
 }

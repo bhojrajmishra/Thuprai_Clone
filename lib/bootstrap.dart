@@ -1,3 +1,4 @@
+import 'package:app_links/app_links.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:thuprai_clone/app/app.dialogs.dart';
 import 'package:thuprai_clone/app/app.locator.dart';
 import 'package:thuprai_clone/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:thuprai_clone/base/service/deep_link_service.dart';
 import 'package:thuprai_clone/firebase_options.dart';
 
 Future<void> bootstrap(String env) async {
@@ -21,6 +23,11 @@ Future<void> bootstrap(String env) async {
       builder: (context) => const MainApp(
             env: '',
           )));
+  Future.delayed(const Duration(seconds: 2), () {
+    final deepLinkService = locator<DeepLinkService>();
+    deepLinkService.initializeDeepLinks();
+    debugPrint('Deep link initialization completed');
+  });
 }
 
 class MainApp extends StatelessWidget {
